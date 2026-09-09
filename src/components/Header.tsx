@@ -15,6 +15,7 @@ interface HeaderProps {
   cartCount: number;
   onOpenCart: () => void;
   onOpenExperiment: () => void;
+  cartPulse?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -29,6 +30,7 @@ export const Header: React.FC<HeaderProps> = ({
   cartCount,
   onOpenCart,
   onOpenExperiment: _onOpenExperiment,
+  cartPulse = false,
 }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [showRegionDropdown, setShowRegionDropdown] = useState(false);
@@ -268,12 +270,18 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="cart-drawer-toggle-btn"
               onClick={onOpenCart}
-              className="relative p-2 text-[#5F6368] hover:text-[#202124] hover:bg-[#F1F3F4] rounded-full transition-colors cursor-pointer"
+              className={`relative p-2 text-[#5F6368] hover:text-[#202124] hover:bg-[#F1F3F4] rounded-full transition-all duration-300 cursor-pointer ${
+                cartPulse
+                  ? 'ring-2 ring-[#FBBC04] bg-[#FFF8E1] scale-110 shadow-xs'
+                  : ''
+              }`}
               title="View Cart"
             >
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className={`w-5 h-5 transition-transform duration-300 ${cartPulse ? 'text-[#B45309] scale-110' : ''}`} />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 px-1 flex items-center justify-center text-[11px] font-bold text-white bg-[#1A73E8] rounded-full border-2 border-white animate-in zoom-in shadow-xs">
+                <span className={`absolute -top-0.5 -right-0.5 min-w-[20px] h-5 px-1 flex items-center justify-center text-[11px] font-bold text-white bg-[#1A73E8] rounded-full border-2 border-white shadow-xs transition-transform duration-300 ${
+                  cartPulse ? 'scale-125 bg-[#D97706]' : 'scale-100'
+                }`}>
                   {cartCount}
                 </span>
               )}

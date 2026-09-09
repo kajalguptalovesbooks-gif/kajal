@@ -1,7 +1,9 @@
 import React from 'react';
 import { ArrowRight, Sparkles, ShieldCheck, Truck, RefreshCw } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Region } from '../types';
 import { DiyaIcon, ModakAccent, FestivePatternBorder } from './FestiveMotif';
+import { FestiveAtmosphereBackground } from './FestiveMotion';
 
 interface FestiveHeroBannerProps {
   region: Region;
@@ -16,41 +18,62 @@ export const FestiveHeroBanner: React.FC<FestiveHeroBannerProps> = ({
   onExploreFestive,
   onExploreGeneral,
 }) => {
+  const shouldReduceMotion = useReducedMotion();
+
   // If Festival Mode is ON and Region is India:
   if (festivalMode && region === 'IN') {
     return (
       <div className="relative overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-[#FFF9F0] to-[#FFF4E5] border-b border-[#FDE68A]">
-        {/* Subtle decorative background patterns - minimal geometric festive touch */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#FBBC04]/10 via-[#EA4335]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-[#34A853]/5 via-[#FBBC04]/10 to-transparent rounded-full blur-2xl pointer-events-none" />
+        {/* Subtle atmospheric ambient glow & gentle drifting marigold petals */}
+        <FestiveAtmosphereBackground />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Copy & CTAs */}
+            {/* Left Copy & CTAs with Staggered Entrance */}
             <div className="lg:col-span-7 space-y-5">
               {/* Campaign Eyebrow Badge */}
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/90 border border-[#FCD34D] shadow-xs text-xs text-[#92400E]">
+              <motion.div
+                initial={shouldReduceMotion ? false : { opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.05 }}
+                className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/90 border border-[#FCD34D] shadow-xs text-xs text-[#92400E]"
+              >
                 <DiyaIcon className="w-4 h-4 text-[#D97706]" />
                 <span className="font-semibold tracking-wide uppercase text-[11px]">
                   Seasonal Concept Experience • India
                 </span>
                 <span className="w-1 h-1 rounded-full bg-[#D97706]" />
                 <span className="text-[#B45309]">Ganesh Chaturthi</span>
-              </div>
+              </motion.div>
 
-              {/* Primary PRD Headline */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#202124] leading-[1.15]">
+              {/* Primary Headline (Edit word removed as requested) */}
+              <motion.h1
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15, ease: [0.2, 0, 0.2, 1] }}
+                className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#202124] leading-[1.15]"
+              >
                 Ganesh Chaturthi <br className="hidden sm:inline" />
-                <span className="text-[#B45309]">Festive Edit</span>
-              </h1>
+                <span className="text-[#B45309]">Festive Collection</span>
+              </motion.h1>
 
-              {/* PRD Supporting text */}
-              <p className="text-base sm:text-lg text-[#5F6368] max-w-xl leading-relaxed">
+              {/* Supporting text */}
+              <motion.p
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: 0.28, ease: [0.2, 0, 0.2, 1] }}
+                className="text-base sm:text-lg text-[#5F6368] max-w-xl leading-relaxed"
+              >
                 Thoughtful gifts, everyday essentials & festive favourites — curated for India.
-              </p>
+              </motion.p>
 
               {/* Localized India trust factors */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 text-xs text-[#5F6368]">
+              <motion.div
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: 0.4, ease: [0.2, 0, 0.2, 1] }}
+                className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 text-xs text-[#5F6368]"
+              >
                 <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-xs p-2 rounded-lg border border-[#FDE68A]/60">
                   <Truck className="w-4 h-4 text-[#1A73E8] shrink-0" />
                   <span>Simulated PIN delivery check</span>
@@ -63,14 +86,19 @@ export const FestiveHeroBanner: React.FC<FestiveHeroBannerProps> = ({
                   <ShieldCheck className="w-4 h-4 text-[#EA4335] shrink-0" />
                   <span>Curated Google Gear</span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* CTAs */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              <motion.div
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: 0.48, ease: [0.2, 0, 0.2, 1] }}
+                className="flex flex-wrap items-center gap-3 pt-2"
+              >
                 <button
                   id="hero-explore-festive-btn"
                   onClick={onExploreFestive}
-                  className="inline-flex items-center space-x-2 px-6 py-3 bg-[#1A73E8] hover:bg-[#155724]/90 hover:bg-[#1765CC] text-white font-medium text-sm rounded-full shadow-sm hover:shadow-md transition-all cursor-pointer"
+                  className="inline-flex items-center space-x-2 px-6 py-3 bg-[#1A73E8] hover:bg-[#1765CC] text-white font-medium text-sm rounded-full shadow-sm hover:shadow-md transition-all cursor-pointer"
                 >
                   <span>Explore Festive Collection</span>
                   <ArrowRight className="w-4 h-4" />
@@ -82,11 +110,16 @@ export const FestiveHeroBanner: React.FC<FestiveHeroBannerProps> = ({
                 >
                   <span>Browse All Merchandise</span>
                 </button>
-              </div>
+              </motion.div>
             </div>
 
             {/* Right Visual Showcase with Minimal Festive Elements */}
-            <div className="lg:col-span-5 relative flex justify-center">
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.97, y: 14 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.52, ease: [0.2, 0, 0.2, 1] }}
+              className="lg:col-span-5 relative flex justify-center"
+            >
               <div className="relative w-full max-w-md">
                 {/* Floating Festive Card */}
                 <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-5 border border-[#FDE68A] shadow-md relative overflow-hidden">
@@ -96,7 +129,7 @@ export const FestiveHeroBanner: React.FC<FestiveHeroBannerProps> = ({
                         <DiyaIcon className="w-3.5 h-3.5" />
                       </div>
                       <span className="text-xs font-semibold text-[#92400E]">
-                        Ganesh Chaturthi Festive Edit
+                        Ganesh Chaturthi Festive Collection
                       </span>
                     </div>
                     <span className="text-[11px] font-semibold text-[#188038] bg-[#E6F4EA] px-2 py-0.5 rounded-full">
@@ -144,7 +177,7 @@ export const FestiveHeroBanner: React.FC<FestiveHeroBannerProps> = ({
                 {/* Subtle festive accents behind card */}
                 <div className="absolute -bottom-3 -right-3 w-20 h-20 bg-gradient-to-br from-[#FBBC04]/20 to-transparent rounded-full blur-xl -z-10" />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 

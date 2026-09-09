@@ -1,7 +1,8 @@
-import React from 'react';
-import { CheckCircle, Package, Truck, ArrowRight, Download, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { CheckCircle, Package, Truck, ArrowRight, Download, Sparkles, RefreshCw } from 'lucide-react';
 import { ConfirmedOrder } from '../types';
 import { DiyaIcon } from './FestiveMotif';
+import { PurchaseCelebrationOverlay, AbstractFestiveAura } from './FestiveMotion';
 
 interface OrderConfirmationModalProps {
   order: ConfirmedOrder | null;
@@ -17,6 +18,7 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
   if (!order) return null;
 
   const [downloadedMock, setDownloadedMock] = React.useState(false);
+  const [showCelebration, setShowCelebration] = useState(isFestiveActive);
 
   const handleDownloadInvoice = () => {
     setDownloadedMock(true);
@@ -25,14 +27,29 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in zoom-in-95 duration-200">
-      <div className="relative bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-[#DADCE0] text-center">
+      {/* 5-Phase Joyful Blessing Purchase Celebration Overlay */}
+      {isFestiveActive && (
+        <PurchaseCelebrationOverlay
+          isVisible={showCelebration}
+          onComplete={() => setShowCelebration(false)}
+        />
+      )}
+
+      <div className="relative bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-[#DADCE0] text-center z-20 overflow-hidden">
+        {/* Subtle decorative background aura when festive */}
+        {isFestiveActive && (
+          <div className="absolute -top-16 -right-16 opacity-30 pointer-events-none">
+            <AbstractFestiveAura size={180} />
+          </div>
+        )}
+
         {/* Animated Celebration Icon */}
         <div className="relative w-20 h-20 mx-auto mb-4">
-          <div className="w-20 h-20 rounded-full bg-[#E6F4EA] flex items-center justify-center text-[#188038] border-2 border-[#34A853]">
+          <div className="w-20 h-20 rounded-full bg-[#E6F4EA] flex items-center justify-center text-[#188038] border-2 border-[#34A853] shadow-xs">
             <CheckCircle className="w-10 h-10" />
           </div>
           {isFestiveActive && (
-            <div className="absolute -top-1 -right-1 w-8 h-8 rounded-full bg-[#FEF3C7] text-[#D97706] border border-[#FCD34D] flex items-center justify-center shadow-xs animate-bounce">
+            <div className="absolute -top-1 -right-1 w-8 h-8 rounded-full bg-[#FEF3C7] text-[#D97706] border border-[#FCD34D] flex items-center justify-center shadow-xs">
               <DiyaIcon className="w-4 h-4" />
             </div>
           )}
@@ -49,6 +66,15 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
           <p className="text-xs sm:text-sm text-[#5F6368] max-w-md mx-auto">
             Thank you, <span className="font-semibold text-[#202124]">{order.shippingDetails.fullName}</span>. Your prototype purchase demonstration has been recorded successfully.
           </p>
+
+          {/* Festive Blessing Subtitle */}
+          {isFestiveActive && (
+            <div className="pt-2">
+              <p className="text-xs text-[#92400E] bg-[#FFFBEB] px-3.5 py-1.5 rounded-full inline-block border border-[#FDE68A] font-medium">
+                ✨ May your festivities be filled with joy, wisdom & good beginnings.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Order Details Card */}
@@ -140,6 +166,16 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
             <Download className="w-4 h-4" />
             <span>{downloadedMock ? 'Simulated Invoice Saved!' : 'Download Invoice PDF (Prototype)'}</span>
           </button>
+
+          {isFestiveActive && (
+            <button
+              onClick={() => setShowCelebration(true)}
+              className="w-full sm:w-auto px-4 py-3 bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#92400E] font-medium text-xs sm:text-sm rounded-full border border-[#FCD34D] transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>Replay Blessing</span>
+            </button>
+          )}
         </div>
       </div>
     </div>

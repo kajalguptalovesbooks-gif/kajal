@@ -22,6 +22,7 @@ import { OrderConfirmationModal } from './components/OrderConfirmationModal';
 import { UserFeedbackModal } from './components/UserFeedbackModal';
 import { ExperimentDrawer } from './components/ExperimentDrawer';
 import { Footer } from './components/Footer';
+import { TravelingPetalTrail } from './components/FestiveMotion';
 
 export default function App() {
   // Core prototype states
@@ -30,17 +31,18 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<Category>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Cart State
-  const [cart, setCart] = useState<CartItem[]>([
-    {
-      id: 'initial-cart-01',
-      product: PRODUCTS[0], // Google Organic Cotton Tee
-      quantity: 1,
-      selectedSize: 'L',
-      selectedColor: 'Warm Marigold',
-    },
-  ]);
+  // Cart State (Starts empty for genuine first-time shopping experience)
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [justAddedId, setJustAddedId] = useState<string | null>(null);
+
+  // Festive Motion states
+  const [petalTrail, setPetalTrail] = useState<{
+    startX: number;
+    startY: number;
+    targetX: number;
+    targetY: number;
+  } | null>(null);
+  const [cartPulse, setCartPulse] = useState<boolean>(false);
 
   // Modals & Drawers
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -73,7 +75,28 @@ export default function App() {
   }, [logEvent]);
 
   // Cart Operations
-  const handleAddToCart = (product: Product, quantity: number, size?: string, color?: string) => {
+  const handleAddToCart = (
+    product: Product,
+    quantity: number,
+    size?: string,
+    color?: string,
+    clientX?: number,
+    clientY?: number
+  ) => {
+    // Trigger petal trail if active in Festival Mode and not already active
+    if (festivalMode && region === 'IN' && !petalTrail) {
+      const cartBtn = document.getElementById('cart-drawer-toggle-btn');
+      if (cartBtn) {
+        const rect = cartBtn.getBoundingClientRect();
+        setPetalTrail({
+          startX: clientX ?? window.innerWidth / 2,
+          startY: clientY ?? window.innerHeight / 2,
+          targetX: rect.left + rect.width / 2,
+          targetY: rect.top + rect.height / 2,
+        });
+      }
+    }
+
     setCart((prev) => {
       const existingIndex = prev.findIndex(
         (item) =>
@@ -116,6 +139,21 @@ export default function App() {
 
   const handleQuickAdd = (product: Product, e: React.MouseEvent) => {
     e.stopPropagation();
+
+    // Trigger subtle traveling petal trail toward cart in Festival Mode
+    if (festivalMode && region === 'IN') {
+      const cartBtn = document.getElementById('cart-drawer-toggle-btn');
+      if (cartBtn) {
+        const rect = cartBtn.getBoundingClientRect();
+        setPetalTrail({
+          startX: e.clientX,
+          startY: e.clientY,
+          targetX: rect.left + rect.width / 2,
+          targetY: rect.top + rect.height / 2,
+        });
+      }
+    }
+
     handleAddToCart(
       product,
       1,
@@ -234,6 +272,7 @@ export default function App() {
           logEvent('cart_view', { itemsCount: cart.length });
         }}
         onOpenExperiment={() => setIsExperimentOpen(true)}
+        cartPulse={cartPulse}
       />
 
       {/* Main Content Area */}
@@ -248,7 +287,7 @@ export default function App() {
 
         {/* Limited-time Festive Countdown Timer (PRD Section 9) */}
         {festivalMode && region === 'IN' && (
-          <CountdownTimer onCampaignEnd={() => setFestivalMode(false)} />
+          <CountdownTimer />
         )}
 
         {/* Temporary Ganesh Chaturthi Picks Collection (PRD Section 8) */}
@@ -348,6 +387,22 @@ export default function App() {
         onSetRegion={setRegion}
         onClearLogs={() => setAnalyticsLogs([])}
       />
+
+      {/* Add-to-Cart Petal Trail (Active only in Festival Mode for India) */}
+      {festivalMode && region === 'IN' && petalTrail && (
+        <TravelingPetalTrail
+          isActive={!!petalTrail}
+          startX={petalTrail.startX}
+          startY={petalTrail.startY}
+          targetX={petalTrail.targetX}
+          targetY={petalTrail.targetY}
+          onComplete={() => {
+            setPetalTrail(null);
+            setCartPulse(true);
+            setTimeout(() => setCartPulse(false), 500);
+          }}
+        />
+      )}
     </div>
   );
 }

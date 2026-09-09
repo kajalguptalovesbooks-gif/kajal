@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Users, Heart, Briefcase, Sparkles, ArrowRight, X, Check } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Occasion, Product, Region } from '../types';
+import { MarigoldPetalSvg } from './FestiveMotion';
 
 interface ShopByOccasionProps {
   products: Product[];
@@ -26,17 +28,11 @@ export const ShopByOccasion: React.FC<ShopByOccasionProps> = ({
   selectedOccasion,
   onSelectOccasion,
 }) => {
+  const shouldReduceMotion = useReducedMotion();
+  const [sparkleId, setSparkleId] = useState<Occasion | null>(null);
+
+  // Re-ordered per prompt: For Friends, For Family, For Work, For Yourself
   const occasionConfigs: OccasionCardConfig[] = [
-    {
-      id: 'Family',
-      title: 'For Family',
-      badge: 'Home & Dining',
-      subtitle: 'Festive gatherings, home dining, and sharing warm tea moments with loved ones.',
-      icon: <Users className="w-5 h-5 text-[#D97706]" />,
-      sampleItems: 'Coasters, Mugs, Reusable Bottles',
-      colorClass: 'bg-[#FFFBEB]',
-      borderClass: 'border-[#FDE68A]',
-    },
     {
       id: 'Friends',
       title: 'For Friends',
@@ -46,6 +42,16 @@ export const ShopByOccasion: React.FC<ShopByOccasionProps> = ({
       sampleItems: 'Android Mascot, Canvas Tote, Tech Pouch',
       colorClass: 'bg-[#FEF7E0]',
       borderClass: 'border-[#FEEFC3]',
+    },
+    {
+      id: 'Family',
+      title: 'For Family',
+      badge: 'Home & Dining',
+      subtitle: 'Festive gatherings, home dining, and sharing warm tea moments with loved ones.',
+      icon: <Users className="w-5 h-5 text-[#D97706]" />,
+      sampleItems: 'Coasters, Mugs, Reusable Bottles',
+      colorClass: 'bg-[#FFFBEB]',
+      borderClass: 'border-[#FDE68A]',
     },
     {
       id: 'Work',
@@ -71,20 +77,21 @@ export const ShopByOccasion: React.FC<ShopByOccasionProps> = ({
 
   const handleCardClick = (occ: Occasion) => {
     if (selectedOccasion === occ) {
-      // Toggle off if already selected
       onSelectOccasion('All');
     } else {
       onSelectOccasion(occ);
+      setSparkleId(occ);
+      setTimeout(() => setSparkleId(null), 650);
     }
 
-    // Smoothly scroll down to catalogue so user sees filtered items
+    // Smoothly scroll down to catalogue so user sees updated journey
     setTimeout(() => {
       const el = document.getElementById('catalog');
       if (el) {
         const top = el.getBoundingClientRect().top + window.scrollY - 80;
         window.scrollTo({ top, behavior: 'smooth' });
       }
-    }, 60);
+    }, 80);
   };
 
   const getOccasionCount = (occ: Occasion) => {
@@ -106,19 +113,22 @@ export const ShopByOccasion: React.FC<ShopByOccasionProps> = ({
           </p>
         </div>
 
-        {selectedOccasion !== 'All' && (
+        {selectedOccasion !== 'All' ? (
           <div className="flex items-center gap-2">
-            <span className="text-xs text-[#5F6368]">
-              Active filter: <strong className="text-[#202124]">{selectedOccasion}</strong>
+            <span className="text-xs text-[#B45309] font-medium bg-[#FEF3C7] px-2.5 py-1 rounded-full border border-[#FCD34D] flex items-center gap-1.5 animate-in fade-in">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D97706] animate-pulse" />
+              <span>Your shopping journey has changed: <strong>{selectedOccasion}</strong></span>
             </span>
             <button
               onClick={() => onSelectOccasion('All')}
               className="inline-flex items-center space-x-1 text-xs px-2.5 py-1 rounded-full bg-[#F1F3F4] hover:bg-[#E8EAED] text-[#3C4043] font-medium transition-colors cursor-pointer"
             >
               <X className="w-3 h-3" />
-              <span>Clear Filter</span>
+              <span>Reset</span>
             </button>
           </div>
+        ) : (
+          <span className="text-xs text-[#70757A]">Choose an occasion to adapt your collection</span>
         )}
       </div>
 
@@ -127,17 +137,56 @@ export const ShopByOccasion: React.FC<ShopByOccasionProps> = ({
         {occasionConfigs.map((occ) => {
           const isSelected = selectedOccasion === occ.id;
           const count = getOccasionCount(occ.id);
+          const isSparkling = sparkleId === occ.id;
 
           return (
-            <div
+            <motion.div
               key={occ.id}
               onClick={() => handleCardClick(occ.id)}
-              className={`group relative rounded-2xl p-5 border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+              animate={
+                shouldReduceMotion
+                  ? {}
+                  : {
+                      y: isSelected ? -4 : 0,
+                    }
+              }
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className={`group relative rounded-2xl p-5 border transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden ${
                 isSelected
-                  ? 'border-[#1A73E8] bg-white ring-2 ring-[#1A73E8]/20 shadow-md scale-[1.01]'
+                  ? 'border-[#F59E0B] bg-gradient-to-b from-white to-[#FFFDF9] ring-2 ring-[#FBBC04]/60 shadow-md'
                   : 'border-[#E8EAED] bg-white hover:border-[#BDC1C6] hover:shadow-sm'
               }`}
             >
+              {/* Tiny festive particle transition when selected */}
+              <AnimatePresence>
+                {isSparkling && !shouldReduceMotion && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.6 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.2 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute -top-2 -right-2 pointer-events-none"
+                  >
+                    <div className="relative w-12 h-12">
+                      <motion.div
+                        animate={{ x: [0, 8], y: [0, -8], opacity: [1, 0] }}
+                        transition={{ duration: 0.5 }}
+                        className="absolute top-2 right-2"
+                      >
+                        <MarigoldPetalSvg size={10} shade="warm-gold" opacity={0.8} />
+                      </motion.div>
+                      <motion.div
+                        animate={{ x: [0, -6], y: [0, -10], opacity: [1, 0] }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="absolute top-4 right-4"
+                      >
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#FBBC04] shadow-xs" />
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <div>
                 {/* Header: Icon + Badge */}
                 <div className="flex items-center justify-between mb-3.5">
@@ -171,12 +220,12 @@ export const ShopByOccasion: React.FC<ShopByOccasionProps> = ({
                 </span>
 
                 <div className={`flex items-center gap-1 font-semibold text-xs ${
-                  isSelected ? 'text-[#1A73E8]' : 'text-[#5F6368] group-hover:text-[#1A73E8]'
+                  isSelected ? 'text-[#B45309]' : 'text-[#5F6368] group-hover:text-[#1A73E8]'
                 }`}>
                   {isSelected ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-[#1A73E8]" />
-                      <span>Active</span>
+                      <Check className="w-3.5 h-3.5 text-[#B45309]" />
+                      <span>Selected</span>
                     </>
                   ) : (
                     <>
@@ -186,7 +235,7 @@ export const ShopByOccasion: React.FC<ShopByOccasionProps> = ({
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
