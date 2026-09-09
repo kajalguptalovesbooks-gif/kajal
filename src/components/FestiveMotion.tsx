@@ -301,162 +301,188 @@ export const TravelingPetalTrail: React.FC<{
   );
 };
 
-// 9, 10, 11, 12, 13. PURCHASE — EMOTIONAL REWARD CELEBRATION
-interface PurchaseCelebrationOverlayProps {
+// 9, 10, 11, 12, 13. PURCHASE — 3-SECOND CELEBRATORY MARIGOLD PARTICLE EFFECT
+export interface PurchaseCelebrationOverlayProps {
+  isVisible?: boolean;
+  onComplete?: () => void;
   onCelebrationSettle?: () => void;
-  isFestiveActive: boolean;
+  duration?: number;
+  isFestiveActive?: boolean;
 }
 
 export const PurchaseCelebrationOverlay: React.FC<PurchaseCelebrationOverlayProps> = ({
+  isVisible = true,
+  onComplete,
   onCelebrationSettle,
-  isFestiveActive,
+  duration = 3000,
+  isFestiveActive = true,
 }) => {
   const shouldReduceMotion = useReducedMotion();
-  const [phase, setPhase] = useState<1 | 2 | 3 | 4>(1);
 
+  // Exactly 3-second celebratory lifecycle
   useEffect(() => {
-    if (!isFestiveActive || shouldReduceMotion) {
-      if (onCelebrationSettle) onCelebrationSettle();
-      return;
+    if (!isVisible || !isFestiveActive) return;
+
+    if (shouldReduceMotion) {
+      const timer = setTimeout(() => {
+        onComplete?.();
+        onCelebrationSettle?.();
+      }, 1000);
+      return () => clearTimeout(timer);
     }
 
-    // Sequence of 4 phases:
-    // Phase 1 (0ms): soft glow appears
-    // Phase 2 (400ms): controlled marigold petals gently drift downward + golden particles rise
-    // Phase 3 (900ms): subtle decorative Ganesh Chaturthi motif appears
-    // Phase 4 (2500ms): gradual settle, leaves calm confirmation card
-    const timer1 = setTimeout(() => setPhase(2), 350);
-    const timer2 = setTimeout(() => setPhase(3), 850);
-    const timer3 = setTimeout(() => {
-      setPhase(4);
-      if (onCelebrationSettle) onCelebrationSettle();
-    }, 2800);
+    const timer = setTimeout(() => {
+      onComplete?.();
+      onCelebrationSettle?.();
+    }, duration);
 
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-    };
-  }, [isFestiveActive, shouldReduceMotion, onCelebrationSettle]);
+    return () => clearTimeout(timer);
+  }, [isVisible, isFestiveActive, duration, shouldReduceMotion, onComplete, onCelebrationSettle]);
 
-  if (!isFestiveActive || shouldReduceMotion) {
+  if (!isFestiveActive || !isVisible) {
     return null;
   }
 
-  // 14 graceful marigold petals drifting down
-  const celebrationPetals = [
-    { id: 1, left: 15, size: 20, delay: 0.1, duration: 2.6, xOffset: -35, rotation: 70 },
-    { id: 2, left: 28, size: 16, delay: 0.3, duration: 2.8, xOffset: 25, rotation: 140 },
-    { id: 3, left: 42, size: 22, delay: 0.05, duration: 2.5, xOffset: -20, rotation: 45 },
-    { id: 4, left: 55, size: 18, delay: 0.25, duration: 2.7, xOffset: 30, rotation: 110 },
-    { id: 5, left: 68, size: 21, delay: 0.15, duration: 2.6, xOffset: -25, rotation: 90 },
-    { id: 6, left: 82, size: 17, delay: 0.4, duration: 2.9, xOffset: 20, rotation: 160 },
-    { id: 7, left: 22, size: 15, delay: 0.6, duration: 2.4, xOffset: 15, rotation: 30 },
-    { id: 8, left: 75, size: 19, delay: 0.5, duration: 2.5, xOffset: -18, rotation: 125 },
-    { id: 9, left: 36, size: 17, delay: 0.7, duration: 2.6, xOffset: -28, rotation: 80 },
-    { id: 10, left: 62, size: 20, delay: 0.65, duration: 2.7, xOffset: 22, rotation: 150 },
-    { id: 11, left: 10, size: 14, delay: 0.35, duration: 2.8, xOffset: 10, rotation: 65 },
-    { id: 12, left: 88, size: 16, delay: 0.45, duration: 2.7, xOffset: -15, rotation: 100 },
+  if (shouldReduceMotion) {
+    return (
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-50 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0.4, 0] }}
+          transition={{ duration: 1.2, ease: 'easeInOut' }}
+          className="w-96 h-96 rounded-full bg-[#FBBC04]/15 blur-3xl"
+        />
+      </div>
+    );
+  }
+
+  // Curated marigold-inspired particles drifting downward over ~2.4 - 2.9 seconds
+  const marigoldPetals = [
+    { id: 1, left: 8, size: 16, delay: 0.05, duration: 2.5, sway: -25, rotation: 35, shade: 'warm-gold' as const },
+    { id: 2, left: 16, size: 20, delay: 0.2, duration: 2.7, sway: 30, rotation: 110, shade: 'deep-saffron' as const },
+    { id: 3, left: 24, size: 15, delay: 0.1, duration: 2.4, sway: -18, rotation: 60, shade: 'amber' as const },
+    { id: 4, left: 32, size: 22, delay: 0.28, duration: 2.8, sway: 24, rotation: 145, shade: 'warm-gold' as const },
+    { id: 5, left: 40, size: 17, delay: 0.0, duration: 2.5, sway: -32, rotation: 80, shade: 'deep-saffron' as const },
+    { id: 6, left: 48, size: 21, delay: 0.15, duration: 2.6, sway: 20, rotation: 40, shade: 'warm-gold' as const },
+    { id: 7, left: 56, size: 18, delay: 0.32, duration: 2.8, sway: -22, rotation: 120, shade: 'amber' as const },
+    { id: 8, left: 64, size: 23, delay: 0.08, duration: 2.5, sway: 35, rotation: 95, shade: 'deep-saffron' as const },
+    { id: 9, left: 72, size: 16, delay: 0.22, duration: 2.6, sway: -28, rotation: 155, shade: 'warm-gold' as const },
+    { id: 10, left: 80, size: 19, delay: 0.12, duration: 2.7, sway: 25, rotation: 50, shade: 'amber' as const },
+    { id: 11, left: 88, size: 15, delay: 0.35, duration: 2.8, sway: -16, rotation: 130, shade: 'warm-gold' as const },
+    { id: 12, left: 94, size: 18, delay: 0.18, duration: 2.6, sway: 22, rotation: 75, shade: 'deep-saffron' as const },
+    { id: 13, left: 12, size: 14, delay: 0.42, duration: 2.5, sway: 20, rotation: 25, shade: 'amber' as const },
+    { id: 14, left: 28, size: 17, delay: 0.38, duration: 2.5, sway: -24, rotation: 100, shade: 'warm-gold' as const },
+    { id: 15, left: 52, size: 16, delay: 0.45, duration: 2.4, sway: -15, rotation: 65, shade: 'deep-saffron' as const },
+    { id: 16, left: 68, size: 19, delay: 0.4, duration: 2.5, sway: 18, rotation: 140, shade: 'warm-gold' as const },
+    { id: 17, left: 84, size: 15, delay: 0.48, duration: 2.4, sway: -20, rotation: 85, shade: 'amber' as const },
   ];
 
-  // 8 subtle golden sparkles/warm embers rising upward
-  const risingParticles = [
-    { id: 'r1', left: 30, bottom: 20, delay: 0.2, duration: 2.2, x: -15 },
-    { id: 'r2', left: 45, bottom: 15, delay: 0.4, duration: 2.4, x: 20 },
-    { id: 'r3', left: 58, bottom: 25, delay: 0.1, duration: 2.0, x: -10 },
-    { id: 'r4', left: 70, bottom: 18, delay: 0.5, duration: 2.3, x: 25 },
-    { id: 'r5', left: 25, bottom: 30, delay: 0.6, duration: 2.1, x: 12 },
-    { id: 'r6', left: 52, bottom: 12, delay: 0.3, duration: 2.5, x: -18 },
+  // Subtle warm golden embers/pollen droplets
+  const goldenDroplets = [
+    { id: 'd1', left: 18, delay: 0.1, duration: 2.3, sway: 15, size: 5 },
+    { id: 'd2', left: 35, delay: 0.25, duration: 2.6, sway: -18, size: 4 },
+    { id: 'd3', left: 45, delay: 0.05, duration: 2.2, sway: 20, size: 6 },
+    { id: 'd4', left: 60, delay: 0.3, duration: 2.5, sway: -14, size: 5 },
+    { id: 'd5', left: 76, delay: 0.15, duration: 2.4, sway: 22, size: 4 },
+    { id: 'd6', left: 90, delay: 0.35, duration: 2.7, sway: -16, size: 5 },
+    { id: 'd7', left: 26, delay: 0.4, duration: 2.3, sway: 12, size: 4 },
+    { id: 'd8', left: 66, delay: 0.45, duration: 2.4, sway: -15, size: 5 },
   ];
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl z-20">
-      {/* PHASE 1 — Confirmation Soft Warm Glow */}
+    <AnimatePresence>
       <motion.div
-        initial={{ opacity: 0, scale: 0.85 }}
-        animate={{
-          opacity: phase < 4 ? 0.8 : 0,
-          scale: phase < 4 ? 1.05 : 1,
-        }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="absolute inset-0 bg-radial from-[#FBBC04]/20 via-[#F59E0B]/10 to-transparent blur-xl"
-      />
+        key="celebration-overlay"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0, transition: { duration: 0.5, ease: 'easeOut' } }}
+        className="fixed inset-0 pointer-events-none overflow-hidden z-50 select-none"
+      >
+        {/* Soft atmospheric ambient golden radial glow over the confirmation view */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{
+            opacity: [0, 0.6, 0.45, 0],
+            scale: [0.85, 1.05, 1.15, 1.2],
+          }}
+          transition={{ duration: 2.9, ease: 'easeOut' }}
+          className="absolute inset-0 bg-radial from-[#FBBC04]/20 via-[#F59E0B]/8 to-transparent blur-2xl"
+        />
 
-      {/* PHASE 3 — Abstract Elegant Ganesh Chaturthi Motif Aura */}
-      <AnimatePresence>
-        {phase >= 3 && phase < 4 && (
+        {/* Minimal festive aura watermark that fades gracefully */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{
+            opacity: [0, 0.3, 0.25, 0],
+            scale: [0.9, 1, 1.05, 1.08],
+          }}
+          transition={{ duration: 2.8, ease: 'easeOut' }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 pointer-events-none"
+        >
+          <AbstractFestiveAura className="w-full h-full text-[#FBBC04]" />
+        </motion.div>
+
+        {/* Downward drifting marigold-inspired particles */}
+        {marigoldPetals.map((petal) => (
           <motion.div
-            initial={{ opacity: 0, scale: 0.85, rotate: -5 }}
-            animate={{ opacity: 0.32, scale: 1, rotate: 0 }}
-            exit={{ opacity: 0, scale: 1.08, transition: { duration: 0.7 } }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="absolute top-6 left-1/2 -translate-x-1/2 w-64 h-64 pointer-events-none"
+            key={petal.id}
+            className="absolute top-0"
+            style={{ left: `${petal.left}%` }}
+            initial={{
+              y: -50,
+              x: 0,
+              opacity: 0,
+              rotate: petal.rotation,
+            }}
+            animate={{
+              y: ['0vh', '110vh'],
+              x: [0, petal.sway, -petal.sway * 0.5, petal.sway * 0.8],
+              rotate: [petal.rotation, petal.rotation + 140, petal.rotation + 280],
+              opacity: [0, 0.9, 0.8, 0],
+            }}
+            transition={{
+              duration: petal.duration,
+              delay: petal.delay,
+              ease: [0.25, 0.1, 0.25, 1], // natural organic drag curve
+            }}
           >
-            <AbstractFestiveAura className="w-full h-full text-[#FBBC04]" />
+            <MarigoldPetalSvg
+              size={petal.size}
+              shade={petal.shade}
+              opacity={0.9}
+            />
           </motion.div>
-        )}
-      </AnimatePresence>
+        ))}
 
-      {/* PHASE 2 — Marigold Petals Drifting Downward */}
-      <AnimatePresence>
-        {phase >= 2 && phase < 4 && (
-          <div className="absolute inset-0">
-            {celebrationPetals.map((petal) => (
-              <motion.div
-                key={petal.id}
-                className="absolute top-0"
-                style={{ left: `${petal.left}%` }}
-                initial={{
-                  y: -30,
-                  x: 0,
-                  opacity: 0,
-                  rotate: petal.rotation,
-                }}
-                animate={{
-                  y: ['0%', '115%'],
-                  x: [0, petal.xOffset, petal.xOffset / 2, petal.xOffset * 1.2],
-                  rotate: [petal.rotation, petal.rotation + 180, petal.rotation + 300],
-                  opacity: [0, 0.85, 0.85, 0],
-                }}
-                transition={{
-                  duration: petal.duration,
-                  delay: petal.delay,
-                  ease: [0.25, 0.1, 0.25, 1],
-                }}
-              >
-                <MarigoldPetalSvg
-                  size={petal.size}
-                  shade={petal.id % 2 === 0 ? 'warm-gold' : 'deep-saffron'}
-                  opacity={0.85}
-                />
-              </motion.div>
-            ))}
-
-            {/* Rising warm golden particles */}
-            {risingParticles.map((rp) => (
-              <motion.div
-                key={rp.id}
-                className="absolute"
-                style={{ left: `${rp.left}%`, bottom: `${rp.bottom}%` }}
-                initial={{ y: 0, opacity: 0, scale: 0.6 }}
-                animate={{
-                  y: -140,
-                  x: [0, rp.x, rp.x * 1.5],
-                  opacity: [0, 0.9, 0.9, 0],
-                  scale: [0.6, 1.2, 0.4],
-                }}
-                transition={{
-                  duration: rp.duration,
-                  delay: rp.delay,
-                  ease: 'easeOut',
-                }}
-              >
-                <div className="w-2 h-2 rounded-full bg-gradient-to-t from-[#FBBC04] to-[#FDE047] shadow-xs shadow-[#FBBC04]/80" />
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </AnimatePresence>
-    </div>
+        {/* Subtle golden droplets/florets drifting with the petals */}
+        {goldenDroplets.map((drop) => (
+          <motion.div
+            key={drop.id}
+            className="absolute top-0"
+            style={{ left: `${drop.left}%` }}
+            initial={{
+              y: -30,
+              x: 0,
+              opacity: 0,
+            }}
+            animate={{
+              y: ['0vh', '110vh'],
+              x: [0, drop.sway, -drop.sway * 0.6, drop.sway * 0.8],
+              opacity: [0, 0.85, 0.7, 0],
+            }}
+            transition={{
+              duration: drop.duration,
+              delay: drop.delay,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
+          >
+            <div
+              style={{ width: drop.size, height: drop.size }}
+              className="rounded-full bg-gradient-to-t from-[#FBBC04] to-[#FDE047] shadow-xs shadow-[#FBBC04]/60"
+            />
+          </motion.div>
+        ))}
+      </motion.div>
+    </AnimatePresence>
   );
 };

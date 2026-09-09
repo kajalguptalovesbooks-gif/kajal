@@ -18,28 +18,48 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
   if (!order) return null;
 
   const [downloadedMock, setDownloadedMock] = React.useState(false);
-  const [showCelebration, setShowCelebration] = useState(isFestiveActive);
+  const [showCelebration, setShowCelebration] = useState(true);
+  const [celebrationKey, setCelebrationKey] = useState(0);
+
+  // Trigger 3-second celebratory animation effect whenever an order is placed
+  React.useEffect(() => {
+    if (order) {
+      setShowCelebration(true);
+      setCelebrationKey((prev) => prev + 1);
+    }
+  }, [order?.orderId]);
 
   const handleDownloadInvoice = () => {
     setDownloadedMock(true);
     setTimeout(() => setDownloadedMock(false), 3000);
   };
 
+  const handleReplayCelebration = () => {
+    setShowCelebration(false);
+    setTimeout(() => {
+      setShowCelebration(true);
+      setCelebrationKey((k) => k + 1);
+    }, 60);
+  };
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in zoom-in-95 duration-200">
-      {/* 5-Phase Joyful Blessing Purchase Celebration Overlay */}
-      {isFestiveActive && (
+      {/* 3-Second Celebratory Animation Effect: Subtle Marigold Particles Drifting Downward */}
+      {showCelebration && (
         <PurchaseCelebrationOverlay
+          key={celebrationKey}
           isVisible={showCelebration}
+          duration={3000}
           onComplete={() => setShowCelebration(false)}
+          isFestiveActive={true}
         />
       )}
 
       <div className="relative bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-[#DADCE0] text-center z-20 overflow-hidden">
         {/* Subtle decorative background aura when festive */}
         {isFestiveActive && (
-          <div className="absolute -top-16 -right-16 opacity-30 pointer-events-none">
-            <AbstractFestiveAura size={180} />
+          <div className="absolute -top-16 -right-16 opacity-30 pointer-events-none w-48 h-48">
+            <AbstractFestiveAura className="w-full h-full" />
           </div>
         )}
 
@@ -167,15 +187,15 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
             <span>{downloadedMock ? 'Simulated Invoice Saved!' : 'Download Invoice PDF (Prototype)'}</span>
           </button>
 
-          {isFestiveActive && (
-            <button
-              onClick={() => setShowCelebration(true)}
-              className="w-full sm:w-auto px-4 py-3 bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#92400E] font-medium text-xs sm:text-sm rounded-full border border-[#FCD34D] transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-              <span>Replay Blessing</span>
-            </button>
-          )}
+          <button
+            id="replay-celebration-btn"
+            onClick={handleReplayCelebration}
+            className="w-full sm:w-auto px-4 py-3 bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#92400E] font-medium text-xs sm:text-sm rounded-full border border-[#FCD34D] transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
+            title="Replay 3-second celebratory animation"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
+            <span>Replay Celebration</span>
+          </button>
         </div>
       </div>
     </div>
