@@ -1,0 +1,6 @@
+{
+  "name": "Google Merchandise Store — India Ganesh Chaturthi Experience",
+  "description": "An e-commerce prototype testing localized Indian shopping with INR pricing, PIN delivery checks, and a temporary Ganesh Chaturthi festive campaign.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
