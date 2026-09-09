@@ -52,7 +52,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           <div className="flex items-center space-x-2">
             <ShoppingBag className="w-5 h-5 text-[#1A73E8]" />
             <h2 className="text-base font-bold text-[#202124]">
-              Shopping Cart ({items.reduce((sum, i) => sum + i.quantity, 0)})
+              Your Shopping Bag ({items.reduce((sum, i) => sum + i.quantity, 0)})
             </h2>
             {region === 'IN' && (
               <span className="text-[10px] font-semibold bg-[#E8F0FE] text-[#1A73E8] px-2 py-0.5 rounded-full">
@@ -63,7 +63,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           <button
             onClick={handleCloseAndCheckAbandonment}
             className="p-1.5 rounded-full text-[#5F6368] hover:text-[#202124] hover:bg-[#F1F3F4] transition-colors"
-            title="Close cart"
+            title="Close bag"
           >
             <X className="w-5 h-5" />
           </button>
@@ -77,9 +77,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <ShoppingBag className="w-8 h-8" />
               </div>
               <div>
-                <h3 className="font-semibold text-[#202124] text-base">Your cart is empty</h3>
+                <h3 className="font-semibold text-[#202124] text-base">Your bag is looking a bit light</h3>
                 <p className="text-xs text-[#5F6368] max-w-xs mx-auto mt-1 leading-relaxed">
-                  You haven't added any Google merchandise yet. Explore categories below to start shopping:
+                  Whenever you are ready, explore our favorite categories below to find something nice for yourself or loved ones:
                 </p>
               </div>
 
@@ -109,7 +109,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   onClick={onClose}
                   className="px-5 py-2.5 bg-[#1A73E8] hover:bg-[#1765CC] text-white text-xs font-semibold rounded-full shadow-xs transition-colors cursor-pointer"
                 >
-                  Browse All Merchandise
+                  Explore the Collection
                 </button>
               </div>
             </div>
@@ -193,12 +193,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 {subtotalINR >= 1999 ? (
                   <div className="text-[#188038] font-semibold flex items-center gap-1.5">
                     <Truck className="w-4 h-4" />
-                    <span>Free delivery unlocked on this prototype order!</span>
+                    <span>Nice! You have unlocked free delivery for this order.</span>
                   </div>
                 ) : (
                   <div className="text-[#5F6368] space-y-1">
                     <div className="flex justify-between text-[11px]">
-                      <span>Add ₹{(1999 - subtotalINR).toLocaleString('en-IN')} more for free delivery</span>
+                      <span>Add ₹{(1999 - subtotalINR).toLocaleString('en-IN')} more to enjoy free delivery</span>
                       <span className="font-semibold">{Math.round((subtotalINR / 1999) * 100)}%</span>
                     </div>
                     <div className="h-1.5 w-full bg-[#E8EAED] rounded-full overflow-hidden">
@@ -258,14 +258,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             <div className="flex items-center justify-between pt-1 text-[11px] text-[#70757A]">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#188038]" />
-                <span>Simulated checkout • Prototype test</span>
+                <span>Safe concept preview • No charges</span>
               </span>
               <button
                 onClick={onOpenFeedbackPrompt}
                 className="text-[#1A73E8] hover:underline flex items-center gap-0.5 cursor-pointer"
               >
                 <HelpCircle className="w-3 h-3" />
-                <span>Feedback</span>
+                <span>Share a quick thought</span>
               </button>
             </div>
           </div>

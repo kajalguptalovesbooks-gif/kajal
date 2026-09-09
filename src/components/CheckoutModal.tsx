@@ -118,11 +118,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#D97706] shrink-0" />
             <span>
-              <strong>Concept Prototype Notice:</strong> This is a simulation for design evaluation. No actual order or payment charge will be processed.
+              <strong>Welcome to this preview:</strong> You can explore checkout freely—no real payment or card charge will ever occur.
             </span>
           </div>
           <span className="font-semibold text-[11px] uppercase tracking-wider bg-white/70 px-2 py-0.5 rounded border border-[#FCD34D] shrink-0">
-            Prototype Demo
+            Safe Demo
           </span>
         </div>
 
@@ -134,7 +134,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <div className="flex items-center justify-between pb-2 border-b border-[#F1F3F4]">
                 <h3 className="text-sm font-bold text-[#202124] flex items-center gap-2">
                   <span className="w-5 h-5 rounded-full bg-[#1A73E8] text-white text-xs flex items-center justify-center font-bold">1</span>
-                  <span>Shipping Address (Simulated)</span>
+                  <span>Where should we deliver your order?</span>
                 </h3>
                 <button
                   type="button"
@@ -152,7 +152,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   }
                   className="text-[11px] text-[#1A73E8] hover:underline font-medium cursor-pointer"
                 >
-                  Prefill Sample Details
+                  Prefill sample details
                 </button>
               </div>
 
@@ -232,9 +232,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <div className="flex items-center justify-between pb-2 border-b border-[#F1F3F4]">
                 <h3 className="text-sm font-bold text-[#202124] flex items-center gap-2">
                   <span className="w-5 h-5 rounded-full bg-[#1A73E8] text-white text-xs flex items-center justify-center font-bold">2</span>
-                  <span>Payment Method (Demonstration)</span>
+                  <span>Choose how you would like to pay</span>
                 </h3>
-                <span className="text-[11px] text-[#5F6368]">Simulated</span>
+                <span className="text-[11px] text-[#188038] font-medium">Safe Preview</span>
               </div>
 
               <div className="space-y-2">
@@ -377,17 +377,17 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 className="w-full py-3.5 bg-[#1A73E8] hover:bg-[#1765CC] disabled:opacity-75 text-white font-semibold text-sm rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all cursor-pointer"
               >
                 {isSubmitting ? (
-                  <span>Authorizing simulated order...</span>
+                  <span>Placing your simulated order...</span>
                 ) : (
                   <>
                     <ShieldCheck className="w-4 h-4" />
-                    <span>Place Order ({region === 'IN' ? `₹${totalINR.toLocaleString('en-IN')}` : `$${totalUSD.toFixed(2)}`})</span>
+                    <span>Complete Order ({region === 'IN' ? `₹${totalINR.toLocaleString('en-IN')}` : `$${totalUSD.toFixed(2)}`})</span>
                   </>
                 )}
               </button>
 
               <div className="text-[11px] text-center text-[#70757A]">
-                By placing this order, you confirm acceptance of prototype test terms.
+                This is a safe concept prototype. No real money or charges will ever be processed.
               </div>
             </div>
           </div>

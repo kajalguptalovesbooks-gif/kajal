@@ -76,18 +76,18 @@ export const Header: React.FC<HeaderProps> = ({
                   <DiyaIcon className="w-3.5 h-3.5" />
                 </span>
                 <span className="font-semibold text-[#B45309]">
-                  Ganesh Chaturthi Concept Showcase:
+                  Happy Ganesh Chaturthi!
                 </span>
                 <span className="hidden sm:inline truncate text-[#5F6368]">
-                  India Localisation Prototype • Simulated PIN delivery check • Curated festive picks
+                  Celebrating with festive picks, friendly INR pricing & doorstep delivery estimates across India.
                 </span>
                 <span className="sm:hidden text-xs truncate text-[#5F6368]">
-                  Festive Concept Prototype
+                  Festive India Concept
                 </span>
               </>
             ) : (
               <span className="truncate">
-                Google Merchandise Store — Concept Prototype • Curated apparel, drinkware & tech gear
+                Welcome to the Google Merchandise Store • Sustainable apparel, drinkware & everyday tech essentials
               </span>
             )}
           </div>
@@ -227,7 +227,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <Search className="w-4 h-4 text-[#5F6368] shrink-0 mr-2" />
                   <input
                     type="text"
-                    placeholder="Search Google gear..."
+                    placeholder="Search tees, bottles, bags, or festive gifts..."
                     value={searchQuery}
                     onChange={(e) => {
                       onSearchChange(e.target.value);

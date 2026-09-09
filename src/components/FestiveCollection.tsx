@@ -47,13 +47,13 @@ export const FestiveCollection: React.FC<FestiveCollectionProps> = ({
           <div>
             <div className="inline-flex items-center space-x-2 text-xs font-semibold text-[#B45309] bg-[#FEF3C7] px-3 py-1 rounded-full border border-[#FCD34D] mb-2.5">
               <DiyaIcon className="w-3.5 h-3.5 text-[#D97706]" />
-              <span>Limited Festive Collection</span>
+              <span>Curated with Care</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#202124]">
-              Ganesh Chaturthi Picks
+              Festive Picks for Ganesh Chaturthi
             </h2>
-            <p className="text-sm text-[#5F6368] mt-1.5 max-w-2xl">
-              Curated everyday merchandise selected for festive gifting, eco-friendly celebration, and personal workspaces during the festival season.
+            <p className="text-sm text-[#5F6368] mt-1.5 max-w-2xl leading-relaxed">
+              A cheerful selection of everyday favorites chosen for gift-giving, shared moments with loved ones, and brightening up your workspace this festive season.
             </p>
 
             {/* Festive accent line draws in smoothly */}

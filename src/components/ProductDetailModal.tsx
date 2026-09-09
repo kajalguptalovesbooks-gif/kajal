@@ -328,10 +328,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     <div className="flex items-center justify-between text-xs font-semibold text-[#202124] mb-2">
                       <div className="flex items-center space-x-1.5">
                         <Truck className="w-4 h-4 text-[#1A73E8]" />
-                        <span>Check Delivery Availability</span>
+                        <span>Check delivery to your area</span>
                       </div>
-                      <span className="text-[11px] font-medium text-[#70757A] bg-white px-2 py-0.5 rounded border border-[#DADCE0]">
-                        Prototype Simulation
+                      <span className="text-[11px] font-medium text-[#1A73E8] bg-[#E8F0FE] px-2 py-0.5 rounded-full border border-[#D2E3FC]">
+                        Doorstep Estimate
                       </span>
                     </div>
 
@@ -339,7 +339,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       <input
                         type="text"
                         maxLength={6}
-                        placeholder="Enter 6-digit PIN code (e.g. 400001)"
+                        placeholder="Enter 6-digit pincode (e.g. 400001)"
                         value={pinInput}
                         onChange={(e) => setPinInput(e.target.value.replace(/\D/g, ''))}
                         className="flex-1 px-3 py-2 bg-white text-xs text-[#202124] border border-[#DADCE0] rounded-lg focus:outline-hidden focus:border-[#1A73E8]"
@@ -355,7 +355,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
                     {/* Quick test PIN shortcuts */}
                     <div className="mt-2.5 flex flex-wrap items-center gap-1.5 text-[11px]">
-                      <span className="text-[#70757A]">Quick PINs:</span>
+                      <span className="text-[#70757A]">Try a sample pincode:</span>
                       {popularPins.map((p) => (
                         <button
                           key={p.pin}
@@ -373,14 +373,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       <div className="mt-3 p-3 bg-[#E6F4EA] rounded-lg border border-[#CEEAD6] text-xs text-[#137333] space-y-1 animate-in fade-in">
                         <div className="font-semibold flex items-center gap-1.5">
                           <CheckCircle2 className="w-4 h-4 text-[#188038] shrink-0" />
-                          <span>✓ Delivery available to {deliveryResult.city}</span>
+                          <span>Good news! Delivery is available to {deliveryResult.city}</span>
                         </div>
                         <div className="text-[11px] text-[#1e8e3e] pl-5">
-                          Estimated delivery window: <strong>{deliveryResult.estimatedDays}</strong>
+                          Estimated doorstep arrival: <strong>{deliveryResult.estimatedDays}</strong>
                         </div>
                         {deliveryResult.expressAvailable && (
                           <div className="text-[11px] text-[#137333]/90 pl-5 font-medium">
-                            ⚡ Express delivery supported for this PIN zone
+                            ⚡ Express delivery is available for this zone
                           </div>
                         )}
                       </div>
@@ -390,10 +390,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       <div className="mt-3 p-3 bg-[#FEF7E0] rounded-lg border border-[#FEEFC3] text-xs text-[#B06000] space-y-1 animate-in fade-in">
                         <div className="font-semibold flex items-center gap-1.5">
                           <AlertCircle className="w-4 h-4 text-[#D97706] shrink-0" />
-                          <span>Delivery availability couldn't be confirmed for this PIN in this prototype.</span>
+                          <span>We couldn't confirm delivery for this pincode in our prototype.</span>
                         </div>
-                        <p className="text-[11px] text-[#70757A] pl-5">
-                          Try testing a verified metro PIN such as <strong>400001</strong> (Mumbai), <strong>110001</strong> (Delhi), or <strong>560001</strong> (Bengaluru).
+                        <p className="text-[11px] text-[#70757A] pl-5 leading-relaxed">
+                          Feel free to try a sample metro pincode such as <strong>400001</strong> (Mumbai), <strong>110001</strong> (Delhi), or <strong>560001</strong> (Bengaluru).
                         </p>
                       </div>
                     )}
@@ -401,7 +401,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     {deliveryResult.status === 'invalid' && (
                       <div className="mt-3 p-2.5 bg-[#FCE8E6] rounded-lg border border-[#FAD2CF] text-xs text-[#C5221F] flex items-center gap-1.5 animate-in fade-in">
                         <AlertCircle className="w-4 h-4 text-[#EA4335] shrink-0" />
-                        <span>Please enter a valid 6-digit PIN code.</span>
+                        <span>Please enter a valid 6-digit Indian pincode.</span>
                       </div>
                     )}
                   </div>
@@ -417,7 +417,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <h3 className="text-sm font-bold text-[#202124] flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#D97706]" />
                   <span>
-                    {isFestiveItem ? 'Complete Your Festive Gifting' : 'You Might Also Like'}
+                    {isFestiveItem ? 'Thoughtfully Paired for Festive Gifting' : 'You Might Also Like'}
                   </span>
                 </h3>
                 <span className="text-xs text-[#70757A]">Curated Google Gear</span>

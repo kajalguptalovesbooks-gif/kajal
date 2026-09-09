@@ -135,10 +135,10 @@ export const ProductListing: React.FC<ProductListingProps> = ({
       <div className="mb-6">
         <div className="flex items-center justify-between pb-3">
           <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5F6368]">
-            Explore by Category
+            Browse by Category
           </h2>
           <span className="text-xs text-[#70757A]">
-            {filteredProducts.length} of {products.length} products
+            Showing {filteredProducts.length} of {products.length} items
           </span>
         </div>
 
@@ -247,8 +247,8 @@ export const ProductListing: React.FC<ProductListingProps> = ({
           </h3>
           <p className="text-xs text-[#5F6368] mt-0.5">
             {region === 'IN'
-              ? '🇮🇳 India Concept Store • Transparent GST & Rupee Pricing'
-              : 'Concept Store Prototype • Google Merchandise'}
+              ? '🇮🇳 Localized India Store • Clear INR pricing & inclusive GST'
+              : 'Authentic Google Merchandise Store'}
           </p>
         </div>
 
@@ -262,7 +262,7 @@ export const ProductListing: React.FC<ProductListingProps> = ({
               onChange={(e) => setInStockOnly(e.target.checked)}
               className="rounded text-[#1A73E8] focus:ring-[#1A73E8] w-3.5 h-3.5"
             />
-            <span>In stock only</span>
+            <span>Show in-stock only</span>
           </label>
 
           {/* Sort dropdown */}
@@ -274,10 +274,10 @@ export const ProductListing: React.FC<ProductListingProps> = ({
               onChange={(e) => setSortBy(e.target.value as any)}
               className="bg-transparent text-xs font-medium text-[#202124] outline-hidden cursor-pointer"
             >
-              <option value="featured">Featured Picks</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="rating">Customer Rating</option>
+              <option value="featured">Featured favorites</option>
+              <option value="price-asc">Price: Low to high</option>
+              <option value="price-desc">Price: High to low</option>
+              <option value="rating">Highest customer rating</option>
             </select>
           </div>
         </div>
@@ -286,7 +286,7 @@ export const ProductListing: React.FC<ProductListingProps> = ({
       {/* Active Filter Badges */}
       {hasActiveFilters && (
         <div className="flex flex-wrap items-center gap-2 pt-3">
-          <span className="text-xs font-semibold text-[#5F6368]">Active filters:</span>
+          <span className="text-xs font-semibold text-[#5F6368]">Applied filters:</span>
 
           {selectedCategory !== 'All' && (
             <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-[#202124] text-white rounded-full text-xs font-medium">
@@ -343,7 +343,7 @@ export const ProductListing: React.FC<ProductListingProps> = ({
             onClick={resetAllFilters}
             className="text-xs text-[#1A73E8] hover:underline font-medium cursor-pointer ml-1"
           >
-            Reset all
+            Clear all
           </button>
         </div>
       )}
@@ -368,18 +368,18 @@ export const ProductListing: React.FC<ProductListingProps> = ({
           <div className="w-12 h-12 rounded-full bg-[#F1F3F4] flex items-center justify-center mx-auto text-[#5F6368] mb-3">
             <SlidersHorizontal className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-bold text-[#202124]">No products match the selected filters</h3>
-          <p className="text-xs text-[#5F6368] mt-1 max-w-sm mx-auto">
+          <h3 className="text-base font-bold text-[#202124]">We couldn't find any products matching your filters</h3>
+          <p className="text-xs text-[#5F6368] mt-1 max-w-sm mx-auto leading-relaxed">
             {selectedCategory !== 'All'
-              ? `No items found in "${selectedCategory}" with the current filters.`
-              : 'Try clearing your occasion or price filter to see more Google gear.'}
+              ? `No items found in "${selectedCategory}" with the active filters.`
+              : 'Don’t worry—try clearing a few filters or exploring a different category to see more Google gear.'}
           </p>
           <div className="mt-5 flex items-center justify-center gap-3">
             <button
               onClick={resetAllFilters}
               className="px-5 py-2.5 bg-[#1A73E8] hover:bg-[#1765CC] text-white text-xs font-semibold rounded-full shadow-xs transition-colors cursor-pointer"
             >
-              Reset All Filters
+              Reset Filters
             </button>
             {selectedCategory !== 'All' && (
               <button

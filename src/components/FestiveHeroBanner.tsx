@@ -40,13 +40,13 @@ export const FestiveHeroBanner: React.FC<FestiveHeroBannerProps> = ({
               >
                 <DiyaIcon className="w-4 h-4 text-[#D97706]" />
                 <span className="font-semibold tracking-wide uppercase text-[11px]">
-                  Seasonal Concept Experience • India
+                  A Warm Festive Welcome • India
                 </span>
                 <span className="w-1 h-1 rounded-full bg-[#D97706]" />
                 <span className="text-[#B45309]">Ganesh Chaturthi</span>
               </motion.div>
 
-              {/* Primary Headline (Edit word removed as requested) */}
+              {/* Primary Headline */}
               <motion.h1
                 initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -64,7 +64,7 @@ export const FestiveHeroBanner: React.FC<FestiveHeroBannerProps> = ({
                 transition={{ duration: 0.45, delay: 0.28, ease: [0.2, 0, 0.2, 1] }}
                 className="text-base sm:text-lg text-[#5F6368] max-w-xl leading-relaxed"
               >
-                Thoughtful gifts, everyday essentials & festive favourites — curated for India.
+                Thoughtful gifts, everyday essentials, and festive favorites—curated with care for your celebrations across India.
               </motion.p>
 
               {/* Localized India trust factors */}
@@ -76,15 +76,15 @@ export const FestiveHeroBanner: React.FC<FestiveHeroBannerProps> = ({
               >
                 <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-xs p-2 rounded-lg border border-[#FDE68A]/60">
                   <Truck className="w-4 h-4 text-[#1A73E8] shrink-0" />
-                  <span>Simulated PIN delivery check</span>
+                  <span>Doorstep delivery check by PIN</span>
                 </div>
                 <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-xs p-2 rounded-lg border border-[#FDE68A]/60">
                   <span className="font-bold text-[#188038] text-sm shrink-0">₹</span>
-                  <span>Transparent INR pricing</span>
+                  <span>Clear INR pricing & local GST</span>
                 </div>
                 <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-xs p-2 rounded-lg border border-[#FDE68A]/60 col-span-2 sm:col-span-1">
                   <ShieldCheck className="w-4 h-4 text-[#EA4335] shrink-0" />
-                  <span>Curated Google Gear</span>
+                  <span>Thoughtfully curated Google gear</span>
                 </div>
               </motion.div>
 
@@ -195,15 +195,15 @@ export const FestiveHeroBanner: React.FC<FestiveHeroBannerProps> = ({
           <div className="lg:col-span-7 space-y-4">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white border border-[#DADCE0] text-xs text-[#5F6368]">
               <span className="w-2 h-2 rounded-full bg-[#1A73E8]" />
-              <span className="font-medium">Concept Store Prototype • Google Merchandise</span>
+              <span className="font-medium">Thoughtfully Crafted • Google Merchandise</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#202124] leading-tight">
-              Simple, sustainable, and designed for your day.
+              Simple, sustainable, and made for your everyday.
             </h1>
 
             <p className="text-base sm:text-lg text-[#5F6368] max-w-xl">
-              Explore certified organic apparel, reusable drinkware, and tech lifestyle essentials from Google.
+              Explore certified organic apparel, reusable drinkware, and mindful tech essentials from Google—designed with care for your day.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-3">

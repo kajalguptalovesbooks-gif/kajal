@@ -58,9 +58,9 @@ export const UserFeedbackModal: React.FC<UserFeedbackModalProps> = ({
             <div className="w-12 h-12 rounded-full bg-[#E6F4EA] text-[#188038] flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
-            <h3 className="font-bold text-base text-[#202124]">Thank you for your feedback!</h3>
-            <p className="text-xs text-[#5F6368]">
-              Your input helps us understand shopper preferences and refine the localized India store experiment.
+            <h3 className="font-bold text-base text-[#202124]">Thank you for sharing your thoughts!</h3>
+            <p className="text-xs text-[#5F6368] leading-relaxed max-w-sm mx-auto">
+              We really appreciate you taking a moment to help us improve the Google Merchandise shopping experience.
             </p>
           </div>
         ) : (
@@ -71,10 +71,10 @@ export const UserFeedbackModal: React.FC<UserFeedbackModalProps> = ({
               </div>
               <div>
                 <h3 className="font-bold text-base text-[#202124] leading-snug">
-                  What stopped you from completing your purchase?
+                  How can we make this better for you?
                 </h3>
                 <p className="text-xs text-[#5F6368] mt-0.5">
-                  Help us evaluate the shopping journey on Google Merchandise Store.
+                  Let us know what would make your shopping experience more seamless.
                 </p>
               </div>
             </div>
@@ -100,13 +100,13 @@ export const UserFeedbackModal: React.FC<UserFeedbackModalProps> = ({
             {/* Optional Comment Input */}
             <div>
               <label className="block text-[11px] font-medium text-[#5F6368] mb-1">
-                Additional thoughts (optional):
+                Anything else you'd like to share? (optional):
               </label>
               <textarea
                 rows={2}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="e.g. Would love more apparel sizes or specific city delivery..."
+                placeholder="e.g. Would love to see additional sizes, festive colors, or gift packaging options..."
                 className="w-full text-xs p-2.5 border border-[#DADCE0] rounded-xl focus:border-[#1A73E8] focus:outline-hidden"
               />
             </div>
@@ -125,7 +125,7 @@ export const UserFeedbackModal: React.FC<UserFeedbackModalProps> = ({
                 disabled={!selectedReason}
                 className="px-5 py-2 text-xs font-semibold bg-[#1A73E8] hover:bg-[#1765CC] disabled:opacity-50 text-white rounded-lg transition-colors flex items-center space-x-1.5 cursor-pointer"
               >
-                <span>Submit</span>
+                <span>Send Feedback</span>
                 <Send className="w-3 h-3" />
               </button>
             </div>

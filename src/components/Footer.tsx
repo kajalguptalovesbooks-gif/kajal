@@ -26,9 +26,9 @@ export const Footer: React.FC<FooterProps> = ({
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <div className="font-semibold text-[#202124] text-xs">Curated Merchandise</div>
-              <div className="text-[11px] text-[#70757A] mt-0.5">
-                Authentic design inspired by Google lifestyle apparel, drinkware & tech gear.
+              <div className="font-semibold text-[#202124] text-xs">Thoughtfully Designed Gear</div>
+              <div className="text-[11px] text-[#70757A] mt-0.5 leading-relaxed">
+                Authentic Google lifestyle apparel, drinkware & desk accessories designed to brighten your day.
               </div>
             </div>
           </div>
@@ -39,12 +39,12 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
             <div>
               <div className="font-semibold text-[#202124] text-xs">
-                {region === 'IN' ? 'Delivery Simulation' : 'Global Shipping'}
+                {region === 'IN' ? 'Reliable Doorstep Delivery' : 'Global Delivery'}
               </div>
-              <div className="text-[11px] text-[#70757A] mt-0.5">
+              <div className="text-[11px] text-[#70757A] mt-0.5 leading-relaxed">
                 {region === 'IN'
-                  ? 'Simulated PIN code delivery check across major Indian metro zones.'
-                  : 'Worldwide delivery experience preview.'}
+                  ? 'Quick delivery estimates and doorstep tracking across Indian pin codes.'
+                  : 'Delivering Google favorites to fans around the world.'}
               </div>
             </div>
           </div>
@@ -59,12 +59,12 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
             <div>
               <div className="font-semibold text-[#202124] text-xs">
-                {festivalMode && region === 'IN' ? 'Festive Season Edition' : 'Sustainable Quality'}
+                {festivalMode && region === 'IN' ? 'Festive Season Warmth' : 'Sustainable Craft'}
               </div>
-              <div className="text-[11px] text-[#70757A] mt-0.5">
+              <div className="text-[11px] text-[#70757A] mt-0.5 leading-relaxed">
                 {festivalMode && region === 'IN'
-                  ? 'Ganesh Chaturthi limited-time campaign layer demonstration.'
-                  : 'Recycled plastics and 100% certified organic cotton items.'}
+                  ? 'Curated gifting ideas to help you share festive joy with loved ones.'
+                  : 'Eco-conscious materials and certified organic cotton made to last.'}
               </div>
             </div>
           </div>
@@ -74,9 +74,9 @@ export const Footer: React.FC<FooterProps> = ({
               <RefreshCw className="w-4 h-4" />
             </div>
             <div>
-              <div className="font-semibold text-[#202124] text-xs">Easy Returns</div>
-              <div className="text-[11px] text-[#70757A] mt-0.5">
-                Hassle-free 30-day exchange and replacement support.
+              <div className="font-semibold text-[#202124] text-xs">Friendly 30-Day Support</div>
+              <div className="text-[11px] text-[#70757A] mt-0.5 leading-relaxed">
+                Simple, stress-free exchanges and helpful customer care whenever you need it.
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           <p className="text-xs text-[#5F6368] leading-relaxed max-w-sm">
-            This website is an experimental e-commerce prototype exploring localized shopping relevance (INR pricing and PIN code availability) and temporary festival layering for Indian visitors during Ganesh Chaturthi.
+            Welcome to the Google Merchandise Store concept preview—exploring transparent INR pricing, local delivery estimates, and warm festive touches for Indian shoppers.
           </p>
 
           <div className="flex items-center space-x-3 pt-2">
@@ -108,14 +108,14 @@ export const Footer: React.FC<FooterProps> = ({
               onClick={onOpenExperiment}
               className="text-[#1A73E8] hover:underline font-medium cursor-pointer"
             >
-              View Experiment Details
+              Learn more about this preview
             </button>
             <span>•</span>
             <button
               onClick={onOpenFeedback}
               className="text-[#1A73E8] hover:underline font-medium cursor-pointer"
             >
-              Shopper Feedback
+              Share your thoughts
             </button>
           </div>
         </div>
@@ -149,9 +149,9 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         <div>
-          <h4 className="font-bold text-[#202124] mb-3">Experiment Disclaimers</h4>
+          <h4 className="font-bold text-[#202124] mb-3">About this preview</h4>
           <p className="text-[11px] text-[#70757A] leading-relaxed">
-            Non-production demonstration prototype. Prices in INR and delivery checks are simulated representations. No actual payments or transactions are executed.
+            This interactive experience is an exploratory design prototype. All delivery checks, currencies, and checkouts are simulated for evaluation.
           </p>
         </div>
       </div>

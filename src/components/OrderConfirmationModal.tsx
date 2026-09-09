@@ -78,20 +78,20 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
         {/* Header */}
         <div className="space-y-1 mb-6">
           <div className="inline-flex items-center space-x-1.5 px-3 py-0.5 rounded-full text-xs font-semibold bg-[#E8F0FE] text-[#1A73E8]">
-            <span>Prototype Order Complete</span>
+            <span>You're all set!</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold text-[#202124]">
-            Order Confirmed!
+            Thank you for your order!
           </h2>
-          <p className="text-xs sm:text-sm text-[#5F6368] max-w-md mx-auto">
-            Thank you, <span className="font-semibold text-[#202124]">{order.shippingDetails.fullName}</span>. Your prototype purchase demonstration has been recorded successfully.
+          <p className="text-xs sm:text-sm text-[#5F6368] max-w-md mx-auto leading-relaxed">
+            Thank you, <span className="font-semibold text-[#202124]">{order.shippingDetails.fullName}</span>. We've received your order and we're getting everything ready for you with care.
           </p>
 
           {/* Festive Blessing Subtitle */}
           {isFestiveActive && (
             <div className="pt-2">
               <p className="text-xs text-[#92400E] bg-[#FFFBEB] px-3.5 py-1.5 rounded-full inline-block border border-[#FDE68A] font-medium">
-                ✨ May your festivities be filled with joy, wisdom & good beginnings.
+                ✨ Wishing you and your loved ones joy, good health, and wonderful beginnings this festive season.
               </p>
             </div>
           )}
@@ -115,7 +115,7 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
             <div>
               <div className="font-semibold text-[#202124] mb-1 flex items-center gap-1">
                 <Truck className="w-3.5 h-3.5 text-[#1A73E8]" />
-                <span>Shipping to</span>
+                <span>Shipping to your doorstep</span>
               </div>
               <div className="text-[#5F6368] leading-relaxed">
                 {order.shippingDetails.address}<br />
@@ -127,13 +127,13 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
             <div>
               <div className="font-semibold text-[#202124] mb-1 flex items-center gap-1">
                 <Package className="w-3.5 h-3.5 text-[#188038]" />
-                <span>Timeline & Dispatch</span>
+                <span>Estimated Arrival</span>
               </div>
               <div className="text-[#5F6368]">
-                Estimated delivery in <span className="font-semibold text-[#202124]">{order.estimatedDeliveryDate}</span>
+                Arriving by <span className="font-semibold text-[#202124]">{order.estimatedDeliveryDate}</span>
               </div>
               <div className="text-[11px] text-[#188038] font-medium mt-1">
-                ✓ Free shipping unlocked for this order
+                ✓ Free doorstep delivery included with our compliments
               </div>
             </div>
           </div>
@@ -141,7 +141,7 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
           {/* Items Preview */}
           <div className="pt-3 border-t border-[#E8EAED]">
             <div className="text-xs font-semibold text-[#202124] mb-2">
-              Purchased Items ({order.items.length})
+              Items in this Order ({order.items.length})
             </div>
             <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1 text-xs">
               {order.items.map((i) => (
@@ -159,7 +159,7 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
             </div>
 
             <div className="flex justify-between items-center pt-2 mt-2 border-t border-[#DADCE0] text-sm font-bold text-[#202124]">
-              <span>Total Paid (Simulated)</span>
+              <span>Total Paid</span>
               <span className="text-[#1A73E8]">
                 {order.currency === 'INR'
                   ? `₹${order.total.toLocaleString('en-IN')}`
@@ -175,7 +175,7 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
             onClick={onClose}
             className="w-full sm:w-auto px-6 py-3 bg-[#1A73E8] hover:bg-[#1765CC] text-white font-semibold text-xs sm:text-sm rounded-full transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
           >
-            <span>Continue Shopping</span>
+            <span>Continue Exploring</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
@@ -184,7 +184,7 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
             className="w-full sm:w-auto px-5 py-3 bg-white hover:bg-[#F8F9FA] text-[#3C4043] font-medium text-xs sm:text-sm rounded-full border border-[#DADCE0] transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
           >
             <Download className="w-4 h-4" />
-            <span>{downloadedMock ? 'Simulated Invoice Saved!' : 'Download Invoice PDF (Prototype)'}</span>
+            <span>{downloadedMock ? 'Sample Receipt Saved!' : 'Save Sample Receipt'}</span>
           </button>
 
           <button
@@ -194,7 +194,7 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
             title="Replay 3-second celebratory animation"
           >
             <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
-            <span>Replay Celebration</span>
+            <span>Replay Celebration ✨</span>
           </button>
         </div>
       </div>

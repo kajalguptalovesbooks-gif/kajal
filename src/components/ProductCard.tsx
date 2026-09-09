@@ -93,7 +93,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </div>
             {region === 'IN' && (
               <span className="text-[10px] text-[#188038] font-medium flex items-center gap-0.5">
-                Eligible for India PIN check
+                Doorstep delivery available
               </span>
             )}
           </div>

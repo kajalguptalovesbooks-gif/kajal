@@ -103,13 +103,13 @@ export const ShopByOccasion: React.FC<ShopByOccasionProps> = ({
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4">
         <div>
           <div className="inline-flex items-center space-x-1.5 text-xs font-semibold text-[#1A73E8] uppercase tracking-wider mb-1">
-            <span>Occasion-Based Gifting</span>
+            <span>Thoughtful Gifting</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#202124]">
             Shop by Occasion
           </h2>
           <p className="text-xs sm:text-sm text-[#5F6368] mt-1 max-w-2xl leading-relaxed">
-            Curated merchandise selections designed for festive visits, family dinner hosting, office teams, and everyday personal essentials.
+            Whether you are visiting dear friends, sharing festive moments with family, heading to work, or simply treating yourself—we have something nice waiting for you.
           </p>
         </div>
 
@@ -117,18 +117,18 @@ export const ShopByOccasion: React.FC<ShopByOccasionProps> = ({
           <div className="flex items-center gap-2">
             <span className="text-xs text-[#B45309] font-medium bg-[#FEF3C7] px-2.5 py-1 rounded-full border border-[#FCD34D] flex items-center gap-1.5 animate-in fade-in">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D97706] animate-pulse" />
-              <span>Your shopping journey has changed: <strong>{selectedOccasion}</strong></span>
+              <span>Tailored for you: <strong>{selectedOccasion}</strong></span>
             </span>
             <button
               onClick={() => onSelectOccasion('All')}
               className="inline-flex items-center space-x-1 text-xs px-2.5 py-1 rounded-full bg-[#F1F3F4] hover:bg-[#E8EAED] text-[#3C4043] font-medium transition-colors cursor-pointer"
             >
               <X className="w-3 h-3" />
-              <span>Reset</span>
+              <span>Show all</span>
             </button>
           </div>
         ) : (
-          <span className="text-xs text-[#70757A]">Choose an occasion to adapt your collection</span>
+          <span className="text-xs text-[#70757A]">Choose who you are shopping for to personalize your view</span>
         )}
       </div>
 

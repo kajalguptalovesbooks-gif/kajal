@@ -41,7 +41,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = () => {
           <div>
             <div className="flex items-center justify-center md:justify-start gap-2">
               <h3 className="text-base sm:text-lg font-bold text-[#202124] tracking-tight">
-                Ganesh Chaturthi Festive Campaign
+                Ganesh Chaturthi Festive Celebration
               </h3>
               <span className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full ${
                 hasEnded
@@ -49,13 +49,13 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = () => {
                   : 'text-[#B45309] bg-[#FEF3C7]'
               }`}>
                 <Sparkles className="w-3 h-3 text-[#D97706]" />
-                {hasEnded ? 'Campaign Concluded' : 'Limited-Time Prototype Offer'}
+                {hasEnded ? 'Campaign Concluded' : 'Seasonal Festive Window'}
               </span>
             </div>
             <p className="text-xs text-[#5F6368] mt-0.5">
               {hasEnded
-                ? 'Campaign window has concluded. Remaining festive inventory is available for general browsing.'
-                : 'Curated celebratory picks with illustrative festive packaging and simulated PIN delivery checks.'}
+                ? 'The festive campaign window has wrapped up, but you are always welcome to browse the collection anytime.'
+                : 'Here to celebrate with you for the days ahead. Take your time exploring our seasonal picks with doorstep delivery estimates.'}
             </p>
           </div>
         </div>
