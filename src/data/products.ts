@@ -274,11 +274,14 @@ export interface PinLocation {
 
 export const KNOWN_PIN_CODES: Record<string, PinLocation> = {
   '400001': { city: 'Mumbai (Fort / South)', state: 'Maharashtra', deliveryDays: '2 - 3 business days', expressAvailable: true },
+  '400013': { city: 'Mumbai (Lower Parel)', state: 'Maharashtra', deliveryDays: '2 - 3 business days', expressAvailable: true },
   '400050': { city: 'Mumbai (Bandra)', state: 'Maharashtra', deliveryDays: '2 - 3 business days', expressAvailable: true },
   '411001': { city: 'Pune (Camp)', state: 'Maharashtra', deliveryDays: '2 - 4 business days', expressAvailable: true },
   '110001': { city: 'New Delhi (Connaught Place)', state: 'Delhi NCR', deliveryDays: '2 - 3 business days', expressAvailable: true },
-  '122002': { city: 'Gurugram (DLF)', state: 'Haryana', deliveryDays: '2 - 3 business days', expressAvailable: true },
+  '110016': { city: 'New Delhi (Hauz Khas)', state: 'Delhi NCR', deliveryDays: '2 - 3 business days', expressAvailable: true },
+  '122002': { city: 'Gurugram (DLF Phase 2)', state: 'Haryana', deliveryDays: '2 - 3 business days', expressAvailable: true },
   '560001': { city: 'Bengaluru (MG Road)', state: 'Karnataka', deliveryDays: '2 - 3 business days', expressAvailable: true },
+  '560034': { city: 'Bengaluru (Koramangala)', state: 'Karnataka', deliveryDays: '2 - 3 business days', expressAvailable: true },
   '560100': { city: 'Bengaluru (Electronic City)', state: 'Karnataka', deliveryDays: '2 - 4 business days', expressAvailable: true },
   '500081': { city: 'Hyderabad (Hitech City)', state: 'Telangana', deliveryDays: '2 - 4 business days', expressAvailable: true },
   '600001': { city: 'Chennai (George Town)', state: 'Tamil Nadu', deliveryDays: '3 - 5 business days', expressAvailable: true },
@@ -291,34 +294,40 @@ export const KNOWN_PIN_CODES: Record<string, PinLocation> = {
 };
 
 export function simulatePinCheck(pin: string): {
+  status: 'available' | 'unknown' | 'invalid';
   isValid: boolean;
   city?: string;
   state?: string;
   deliveryDays?: string;
   expressAvailable?: boolean;
+  message: string;
 } {
   const cleaned = pin.trim();
   if (!/^\d{6}$/.test(cleaned)) {
-    return { isValid: false };
+    return {
+      status: 'invalid',
+      isValid: false,
+      message: 'Please enter a valid 6-digit PIN code.',
+    };
   }
 
   if (KNOWN_PIN_CODES[cleaned]) {
-    return { isValid: true, ...KNOWN_PIN_CODES[cleaned] };
+    const loc = KNOWN_PIN_CODES[cleaned];
+    return {
+      status: 'available',
+      isValid: true,
+      city: loc.city,
+      state: loc.state,
+      deliveryDays: loc.deliveryDays,
+      expressAvailable: loc.expressAvailable,
+      message: `Delivery available to ${loc.city}, ${loc.state}`,
+    };
   }
 
-  // Generative simulation for any valid 6-digit Indian PIN code
-  const firstDigit = cleaned.charAt(0);
-  let state = 'India Hub';
-  if (['1', '2'].includes(firstDigit)) state = 'Northern Region';
-  else if (['3', '4'].includes(firstDigit)) state = 'Western Region';
-  else if (['5', '6'].includes(firstDigit)) state = 'Southern Region';
-  else if (['7', '8'].includes(firstDigit)) state = 'Eastern Region';
-
+  // Not in the prototype's verified coverage list
   return {
-    isValid: true,
-    city: `Standard Delivery Zone (${cleaned})`,
-    state,
-    deliveryDays: '4 - 6 business days',
-    expressAvailable: false,
+    status: 'unknown',
+    isValid: false,
+    message: "Delivery availability couldn't be confirmed for this PIN in this prototype.",
   };
 }

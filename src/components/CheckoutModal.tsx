@@ -114,11 +114,16 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         </div>
 
         {/* Prototype simulation alert */}
-        <div className="bg-[#FEF7E0] border-b border-[#FEEFC3] px-6 py-2 text-xs text-[#7A4F01] flex items-center justify-between">
-          <span>
-            ℹ️ <strong>Prototype Demonstration:</strong> Simplified checkout flow. No real payment or real customer charge occurs.
+        <div className="bg-[#FEF7E0] border-b border-[#FEEFC3] px-6 py-3 text-xs text-[#7A4F01] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-[#D97706] shrink-0" />
+            <span>
+              <strong>Concept Prototype Notice:</strong> This is a simulation for design evaluation. No actual order or payment charge will be processed.
+            </span>
+          </div>
+          <span className="font-semibold text-[11px] uppercase tracking-wider bg-white/70 px-2 py-0.5 rounded border border-[#FCD34D] shrink-0">
+            Prototype Demo
           </span>
-          <span className="font-semibold text-[11px] uppercase tracking-wider">Demo Mode</span>
         </div>
 
         <form onSubmit={handleSubmitOrder} className="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -129,12 +134,26 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <div className="flex items-center justify-between pb-2 border-b border-[#F1F3F4]">
                 <h3 className="text-sm font-bold text-[#202124] flex items-center gap-2">
                   <span className="w-5 h-5 rounded-full bg-[#1A73E8] text-white text-xs flex items-center justify-center font-bold">1</span>
-                  <span>Delivery Address</span>
+                  <span>Shipping Address (Simulated)</span>
                 </h3>
-                <span className="text-[11px] text-[#188038] font-medium flex items-center gap-1">
-                  <Truck className="w-3.5 h-3.5" />
-                  <span>Pan-India Service</span>
-                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData({
+                      fullName: 'Aditya Sharma',
+                      email: 'aditya.sharma@example.com',
+                      phone: '9820012345',
+                      address: 'Flat 402, Lotus Heights, Senapati Bapat Marg',
+                      city: 'Mumbai',
+                      state: 'Maharashtra',
+                      pinCode: '400013',
+                      paymentMethod: 'gpay_upi',
+                    })
+                  }
+                  className="text-[11px] text-[#1A73E8] hover:underline font-medium cursor-pointer"
+                >
+                  Prefill Sample Details
+                </button>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

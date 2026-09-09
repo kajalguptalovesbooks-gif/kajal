@@ -9,6 +9,10 @@ interface ProductListingProps {
   festivalMode: boolean;
   selectedCategory: Category;
   onSelectCategory: (c: Category) => void;
+  selectedOccasion: Occasion;
+  onSelectOccasion: (o: Occasion) => void;
+  selectedPriceFilter: PriceFilter;
+  onSelectPriceFilter: (p: PriceFilter) => void;
   searchQuery: string;
   onSelectProduct: (product: Product) => void;
   onQuickAdd: (product: Product, e: React.MouseEvent) => void;
@@ -21,13 +25,15 @@ export const ProductListing: React.FC<ProductListingProps> = ({
   festivalMode,
   selectedCategory,
   onSelectCategory,
+  selectedOccasion,
+  onSelectOccasion,
+  selectedPriceFilter,
+  onSelectPriceFilter,
   searchQuery,
   onSelectProduct,
   onQuickAdd,
   justAddedId,
 }) => {
-  const [selectedOccasion, setSelectedOccasion] = useState<Occasion>('All');
-  const [selectedPriceFilter, setSelectedPriceFilter] = useState<PriceFilter>('all');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating'>('featured');
   const [inStockOnly, setInStockOnly] = useState(false);
 
@@ -83,7 +89,9 @@ export const ProductListing: React.FC<ProductListingProps> = ({
 
         // Price Filter (Priority 2 & 4)
         let matchesPrice = true;
-        if (selectedPriceFilter === 'under-1500') {
+        if (selectedPriceFilter === 'under-1000') {
+          matchesPrice = region === 'IN' ? p.priceINR < 1000 : p.priceUSD < 15;
+        } else if (selectedPriceFilter === 'under-1500') {
           matchesPrice = region === 'IN' ? p.priceINR < 1500 : p.priceUSD < 20;
         } else if (selectedPriceFilter === 'under-2500') {
           matchesPrice = region === 'IN' ? p.priceINR >= 1500 && p.priceINR < 2500 : p.priceUSD >= 20 && p.priceUSD < 35;
@@ -116,8 +124,8 @@ export const ProductListing: React.FC<ProductListingProps> = ({
 
   const resetAllFilters = () => {
     onSelectCategory('All');
-    setSelectedOccasion('All');
-    setSelectedPriceFilter('all');
+    onSelectOccasion('All');
+    onSelectPriceFilter('all');
     setInStockOnly(false);
   };
 
@@ -178,7 +186,7 @@ export const ProductListing: React.FC<ProductListingProps> = ({
               return (
                 <button
                   key={occ.id}
-                  onClick={() => setSelectedOccasion(occ.id)}
+                  onClick={() => onSelectOccasion(occ.id)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
                     isSelected
                       ? 'bg-[#E8F0FE] text-[#1A73E8] border border-[#1A73E8] font-semibold'
@@ -202,6 +210,7 @@ export const ProductListing: React.FC<ProductListingProps> = ({
           <div className="flex flex-wrap items-center gap-1.5">
             {[
               { id: 'all', label: 'All Prices' },
+              { id: 'under-1000', label: region === 'IN' ? 'Under ₹1,000' : 'Under $15' },
               { id: 'under-1500', label: region === 'IN' ? 'Under ₹1,500' : 'Under $20' },
               { id: 'under-2500', label: region === 'IN' ? '₹1,500 - ₹2,500' : '$20 - $35' },
               { id: 'above-2500', label: region === 'IN' ? '₹2,500 & Above' : '$35 & Above' },
@@ -210,7 +219,7 @@ export const ProductListing: React.FC<ProductListingProps> = ({
               return (
                 <button
                   key={p.id}
-                  onClick={() => setSelectedPriceFilter(p.id as PriceFilter)}
+                  onClick={() => onSelectPriceFilter(p.id as PriceFilter)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                     isSelected
                       ? 'bg-[#E6F4EA] text-[#137333] border border-[#137333] font-semibold'
@@ -238,8 +247,8 @@ export const ProductListing: React.FC<ProductListingProps> = ({
           </h3>
           <p className="text-xs text-[#5F6368] mt-0.5">
             {region === 'IN'
-              ? '🇮🇳 Pan-India Express Delivery • Transparent GST & Rupee Pricing'
-              : 'Official Google Merchandise • Shipped Globally'}
+              ? '🇮🇳 India Concept Store • Transparent GST & Rupee Pricing'
+              : 'Concept Store Prototype • Google Merchandise'}
           </p>
         </div>
 
@@ -291,7 +300,7 @@ export const ProductListing: React.FC<ProductListingProps> = ({
           {selectedOccasion !== 'All' && (
             <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-[#E8F0FE] text-[#1A73E8] border border-[#1A73E8]/30 rounded-full text-xs font-medium">
               <span>Occasion: {selectedOccasion}</span>
-              <button onClick={() => setSelectedOccasion('All')} className="hover:text-[#EA4335] cursor-pointer">
+              <button onClick={() => onSelectOccasion('All')} className="hover:text-[#EA4335] cursor-pointer">
                 <X className="w-3 h-3" />
               </button>
             </span>
@@ -299,8 +308,17 @@ export const ProductListing: React.FC<ProductListingProps> = ({
 
           {selectedPriceFilter !== 'all' && (
             <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-[#E6F4EA] text-[#137333] border border-[#137333]/30 rounded-full text-xs font-medium">
-              <span>Price: {selectedPriceFilter}</span>
-              <button onClick={() => setSelectedPriceFilter('all')} className="hover:text-[#EA4335] cursor-pointer">
+              <span>
+                Price:{' '}
+                {selectedPriceFilter === 'under-1000'
+                  ? (region === 'IN' ? 'Under ₹1,000' : 'Under $15')
+                  : selectedPriceFilter === 'under-1500'
+                  ? (region === 'IN' ? 'Under ₹1,500' : 'Under $20')
+                  : selectedPriceFilter === 'under-2500'
+                  ? (region === 'IN' ? '₹1,500 - ₹2,500' : '$20 - $35')
+                  : (region === 'IN' ? '₹2,500+' : '$35+')}
+              </span>
+              <button onClick={() => onSelectPriceFilter('all')} className="hover:text-[#EA4335] cursor-pointer">
                 <X className="w-3 h-3" />
               </button>
             </span>

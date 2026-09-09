@@ -26,9 +26,9 @@ export const Footer: React.FC<FooterProps> = ({
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <div className="font-semibold text-[#202124] text-xs">Official Merchandise</div>
+              <div className="font-semibold text-[#202124] text-xs">Curated Merchandise</div>
               <div className="text-[11px] text-[#70757A] mt-0.5">
-                Authentic Google lifestyle apparel, drinkware & tech accessories.
+                Authentic design inspired by Google lifestyle apparel, drinkware & tech gear.
               </div>
             </div>
           </div>
@@ -39,12 +39,12 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
             <div>
               <div className="font-semibold text-[#202124] text-xs">
-                {region === 'IN' ? 'Pan-India Delivery' : 'Global Shipping'}
+                {region === 'IN' ? 'Delivery Simulation' : 'Global Shipping'}
               </div>
               <div className="text-[11px] text-[#70757A] mt-0.5">
                 {region === 'IN'
-                  ? 'Simulated coverage across 19,000+ Indian Postal PIN codes.'
-                  : 'Worldwide delivery to Google fans across 60+ countries.'}
+                  ? 'Simulated PIN code delivery check across major Indian metro zones.'
+                  : 'Worldwide delivery experience preview.'}
               </div>
             </div>
           </div>

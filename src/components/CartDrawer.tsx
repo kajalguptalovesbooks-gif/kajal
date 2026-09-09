@@ -11,6 +11,7 @@ interface CartDrawerProps {
   onRemoveItem: (cartItemId: string) => void;
   onProceedToCheckout: () => void;
   onOpenFeedbackPrompt: () => void;
+  onSelectCategory?: (category: string) => void;
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({
@@ -22,6 +23,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   onRemoveItem,
   onProceedToCheckout,
   onOpenFeedbackPrompt,
+  onSelectCategory,
 }) => {
   if (!isOpen) return null;
 
@@ -70,20 +72,46 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         {/* Cart Items List */}
         <div className="flex-1 overflow-y-auto p-5 space-y-4 divide-y divide-[#F1F3F4]">
           {items.length === 0 ? (
-            <div className="text-center py-16 space-y-3">
-              <div className="w-16 h-16 rounded-full bg-[#F8F9FA] flex items-center justify-center mx-auto text-[#BDC1C6]">
+            <div className="text-center py-12 space-y-4">
+              <div className="w-16 h-16 rounded-full bg-[#F8F9FA] flex items-center justify-center mx-auto text-[#BDC1C6] border border-[#E8EAED]">
                 <ShoppingBag className="w-8 h-8" />
               </div>
-              <h3 className="font-semibold text-[#202124] text-base">Your cart is empty</h3>
-              <p className="text-xs text-[#5F6368] max-w-xs mx-auto">
-                Explore our everyday Google merchandise and seasonal festive picks to get started.
-              </p>
-              <button
-                onClick={onClose}
-                className="mt-2 px-5 py-2.5 bg-[#1A73E8] hover:bg-[#1765CC] text-white text-xs font-medium rounded-full shadow-xs transition-colors"
-              >
-                Browse Merchandise
-              </button>
+              <div>
+                <h3 className="font-semibold text-[#202124] text-base">Your cart is empty</h3>
+                <p className="text-xs text-[#5F6368] max-w-xs mx-auto mt-1 leading-relaxed">
+                  You haven't added any Google merchandise yet. Explore categories below to start shopping:
+                </p>
+              </div>
+
+              {/* Category jump buttons */}
+              <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto pt-2">
+                {[
+                  { name: 'Apparel', label: 'Apparel' },
+                  { name: 'Drinkware', label: 'Drinkware' },
+                  { name: 'Bags & Lifestyle', label: 'Bags & Gear' },
+                  { name: 'Accessories', label: 'Accessories' },
+                ].map((cat) => (
+                  <button
+                    key={cat.name}
+                    onClick={() => {
+                      if (onSelectCategory) onSelectCategory(cat.name);
+                      onClose();
+                    }}
+                    className="p-2.5 rounded-xl border border-[#DADCE0] hover:border-[#1A73E8] hover:bg-[#E8F0FE]/40 text-xs font-medium text-[#3C4043] transition-colors text-center cursor-pointer"
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="pt-2">
+                <button
+                  onClick={onClose}
+                  className="px-5 py-2.5 bg-[#1A73E8] hover:bg-[#1765CC] text-white text-xs font-semibold rounded-full shadow-xs transition-colors cursor-pointer"
+                >
+                  Browse All Merchandise
+                </button>
+              </div>
             </div>
           ) : (
             items.map((item) => (
@@ -165,7 +193,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 {subtotalINR >= 1999 ? (
                   <div className="text-[#188038] font-semibold flex items-center gap-1.5">
                     <Truck className="w-4 h-4" />
-                    <span>You've unlocked FREE Pan-India delivery!</span>
+                    <span>Free delivery unlocked on this prototype order!</span>
                   </div>
                 ) : (
                   <div className="text-[#5F6368] space-y-1">
@@ -230,7 +258,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             <div className="flex items-center justify-between pt-1 text-[11px] text-[#70757A]">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#188038]" />
-                <span>Encrypted simulated checkout</span>
+                <span>Simulated checkout • Prototype test</span>
               </span>
               <button
                 onClick={onOpenFeedbackPrompt}

@@ -57,20 +57,27 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       const sim = simulatePinCheck(pinToTest);
       let result: DeliveryCheckResult;
 
-      if (sim.isValid) {
+      if (sim.status === 'available') {
         result = {
           pinCode: pinToTest,
           status: 'available',
           city: sim.city,
           state: sim.state,
           estimatedDays: sim.deliveryDays,
-          message: `Delivery available to ${sim.city || 'your address'} (${pinToTest})`,
+          expressAvailable: sim.expressAvailable,
+          message: sim.message,
+        };
+      } else if (sim.status === 'invalid') {
+        result = {
+          pinCode: pinToTest,
+          status: 'invalid',
+          message: 'Please enter a valid 6-digit PIN code.',
         };
       } else {
         result = {
           pinCode: pinToTest,
-          status: 'unavailable',
-          message: 'Please enter a valid 6-digit Indian Postal PIN Code.',
+          status: 'unknown',
+          message: "Delivery availability couldn't be confirmed for this PIN in this prototype.",
         };
       }
 
@@ -79,7 +86,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       if (onLogPinCheck) {
         onLogPinCheck(pinToTest, result);
       }
-    }, 350);
+    }, 300);
   };
 
   const handleCheckDelivery = (e: React.FormEvent) => {
@@ -98,13 +105,23 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     setTimeout(() => setIsAddedSuccess(false), 2000);
   };
 
-  // Recommended complementary products (Priority 4)
+  // Rule-based complementary product recommendations (Priority 1 #10)
   const recommendations = useMemo(() => {
     if (!allProducts || allProducts.length === 0) return [];
     return allProducts
-      .filter((p) => p.id !== product.id)
+      .filter((p) => p.id !== product.id && p.inStock)
+      .sort((a, b) => {
+        // Boost items matching same category or shared occasions
+        const aCatScore = a.category === product.category ? 3 : 0;
+        const bCatScore = b.category === product.category ? 3 : 0;
+        const aOccScore = a.occasions?.some((o) => product.occasions?.includes(o)) ? 2 : 0;
+        const bOccScore = b.occasions?.some((o) => product.occasions?.includes(o)) ? 2 : 0;
+        const aFestive = a.isFestivePick ? 1 : 0;
+        const bFestive = b.isFestivePick ? 1 : 0;
+        return (bCatScore + bOccScore + aFestive) - (aCatScore + aOccScore + bFestive);
+      })
       .slice(0, 3);
-  }, [allProducts, product.id]);
+  }, [allProducts, product]);
 
   const isFestiveItem = festivalMode && region === 'IN' && product.isFestivePick;
 
@@ -313,7 +330,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         <Truck className="w-4 h-4 text-[#1A73E8]" />
                         <span>Check Delivery Availability</span>
                       </div>
-                      <span className="text-[11px] font-normal text-[#188038]">Pan-India Coverage</span>
+                      <span className="text-[11px] font-medium text-[#70757A] bg-white px-2 py-0.5 rounded border border-[#DADCE0]">
+                        Prototype Simulation
+                      </span>
                     </div>
 
                     <form onSubmit={handleCheckDelivery} className="flex gap-2">
@@ -351,24 +370,38 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
                     {/* Delivery check feedback results */}
                     {deliveryResult.status === 'available' && (
-                      <div className="mt-3 p-2.5 bg-[#E6F4EA] rounded-lg border border-[#CEEAD6] text-xs text-[#137333] space-y-1 animate-in fade-in">
+                      <div className="mt-3 p-3 bg-[#E6F4EA] rounded-lg border border-[#CEEAD6] text-xs text-[#137333] space-y-1 animate-in fade-in">
                         <div className="font-semibold flex items-center gap-1.5">
-                          <CheckCircle2 className="w-4 h-4 text-[#188038]" />
-                          <span>✓ Delivery available to {deliveryResult.city} ({deliveryResult.pinCode})</span>
+                          <CheckCircle2 className="w-4 h-4 text-[#188038] shrink-0" />
+                          <span>✓ Delivery available to {deliveryResult.city}</span>
                         </div>
                         <div className="text-[11px] text-[#1e8e3e] pl-5">
-                          Estimated delivery time: <strong>{deliveryResult.estimatedDays}</strong>
+                          Estimated delivery window: <strong>{deliveryResult.estimatedDays}</strong>
                         </div>
-                        <div className="text-[10px] text-[#137333]/80 pl-5">
-                          ⚡ Dispatched from nearest Indian fulfillment hub with live tracking.
-                        </div>
+                        {deliveryResult.expressAvailable && (
+                          <div className="text-[11px] text-[#137333]/90 pl-5 font-medium">
+                            ⚡ Express delivery supported for this PIN zone
+                          </div>
+                        )}
                       </div>
                     )}
 
-                    {deliveryResult.status === 'unavailable' && (
+                    {deliveryResult.status === 'unknown' && (
+                      <div className="mt-3 p-3 bg-[#FEF7E0] rounded-lg border border-[#FEEFC3] text-xs text-[#B06000] space-y-1 animate-in fade-in">
+                        <div className="font-semibold flex items-center gap-1.5">
+                          <AlertCircle className="w-4 h-4 text-[#D97706] shrink-0" />
+                          <span>Delivery availability couldn't be confirmed for this PIN in this prototype.</span>
+                        </div>
+                        <p className="text-[11px] text-[#70757A] pl-5">
+                          Try testing a verified metro PIN such as <strong>400001</strong> (Mumbai), <strong>110001</strong> (Delhi), or <strong>560001</strong> (Bengaluru).
+                        </p>
+                      </div>
+                    )}
+
+                    {deliveryResult.status === 'invalid' && (
                       <div className="mt-3 p-2.5 bg-[#FCE8E6] rounded-lg border border-[#FAD2CF] text-xs text-[#C5221F] flex items-center gap-1.5 animate-in fade-in">
                         <AlertCircle className="w-4 h-4 text-[#EA4335] shrink-0" />
-                        <span>{deliveryResult.message}</span>
+                        <span>Please enter a valid 6-digit PIN code.</span>
                       </div>
                     )}
                   </div>
@@ -383,9 +416,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-bold text-[#202124] flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#D97706]" />
-                  <span>You Might Also Like • Complete Your Gifting</span>
+                  <span>
+                    {isFestiveItem ? 'Complete Your Festive Gifting' : 'You Might Also Like'}
+                  </span>
                 </h3>
-                <span className="text-xs text-[#70757A]">Complementary Google Gear</span>
+                <span className="text-xs text-[#70757A]">Curated Google Gear</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

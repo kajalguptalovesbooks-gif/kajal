@@ -46,8 +46,8 @@ export const FestiveCollection: React.FC<FestiveCollectionProps> = ({
           </div>
 
           <div className="flex items-center space-x-2 text-xs font-medium text-[#70757A]">
-            <span className="w-2 h-2 rounded-full bg-[#188038]" />
-            <span>Pan-India express dispatch ready</span>
+            <span className="w-2 h-2 rounded-full bg-[#D97706]" />
+            <span>Festive gifting selection</span>
           </div>
         </div>
 

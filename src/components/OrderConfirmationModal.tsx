@@ -16,6 +16,13 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
 }) => {
   if (!order) return null;
 
+  const [downloadedMock, setDownloadedMock] = React.useState(false);
+
+  const handleDownloadInvoice = () => {
+    setDownloadedMock(true);
+    setTimeout(() => setDownloadedMock(false), 3000);
+  };
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in zoom-in-95 duration-200">
       <div className="relative bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-[#DADCE0] text-center">
@@ -127,11 +134,11 @@ export const OrderConfirmationModal: React.FC<OrderConfirmationModalProps> = ({
           </button>
 
           <button
-            onClick={() => alert(`Simulated receipt download initiated for ${order.orderId}`)}
+            onClick={handleDownloadInvoice}
             className="w-full sm:w-auto px-5 py-3 bg-white hover:bg-[#F8F9FA] text-[#3C4043] font-medium text-xs sm:text-sm rounded-full border border-[#DADCE0] transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
           >
             <Download className="w-4 h-4" />
-            <span>Download Invoice PDF (Mock)</span>
+            <span>{downloadedMock ? 'Simulated Invoice Saved!' : 'Download Invoice PDF (Prototype)'}</span>
           </button>
         </div>
       </div>

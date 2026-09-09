@@ -74,18 +74,18 @@ export const Header: React.FC<HeaderProps> = ({
                   <DiyaIcon className="w-3.5 h-3.5" />
                 </span>
                 <span className="font-semibold text-[#B45309]">
-                  Ganesh Chaturthi Festive Edition:
+                  Ganesh Chaturthi Concept Showcase:
                 </span>
                 <span className="hidden sm:inline truncate text-[#5F6368]">
-                  Pan-India express delivery • Free shipping on orders over ₹1,999 • 100% Genuine Google Gear
+                  India Localisation Prototype • Simulated PIN delivery check • Curated festive picks
                 </span>
                 <span className="sm:hidden text-xs truncate text-[#5F6368]">
-                  Free delivery on orders over ₹1,999
+                  Festive Concept Prototype
                 </span>
               </>
             ) : (
               <span className="truncate">
-                Official Google Merchandise Store • Free Pan-India delivery on orders over ₹1,999 • Dispatched from Mumbai
+                Google Merchandise Store — Concept Prototype • Curated apparel, drinkware & tech gear
               </span>
             )}
           </div>
@@ -180,7 +180,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <span className="text-[#5F6368] font-normal text-sm">Merchandise Store</span>
                   {region === 'IN' && (
                     <span className="text-[10px] font-bold bg-[#E8F0FE] text-[#1A73E8] px-1.5 py-0.5 rounded border border-[#D2E3FC]">
-                      India Store
+                      India Prototype
                     </span>
                   )}
                 </div>

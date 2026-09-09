@@ -4,7 +4,7 @@ export type Category = 'All' | 'Apparel' | 'Drinkware' | 'Bags & Lifestyle' | 'A
 
 export type Occasion = 'All' | 'Family' | 'Friends' | 'Work' | 'Yourself';
 
-export type PriceFilter = 'all' | 'under-1500' | 'under-2500' | 'above-2500';
+export type PriceFilter = 'all' | 'under-1000' | 'under-1500' | 'under-2500' | 'above-2500';
 
 export interface Product {
   id: string;
@@ -39,10 +39,11 @@ export interface CartItem {
 
 export interface DeliveryCheckResult {
   pinCode: string;
-  status: 'idle' | 'checking' | 'available' | 'unavailable';
+  status: 'idle' | 'checking' | 'available' | 'unknown' | 'invalid' | 'unavailable';
   city?: string;
   state?: string;
   estimatedDays?: string;
+  expressAvailable?: boolean;
   message?: string;
 }
 
@@ -76,6 +77,8 @@ export interface AnalyticsLog {
     | 'homepage_visit'
     | 'festive_banner_click'
     | 'festive_collection_view'
+    | 'occasion_select'
+    | 'price_filter_select'
     | 'product_view'
     | 'pin_check'
     | 'add_to_cart'
