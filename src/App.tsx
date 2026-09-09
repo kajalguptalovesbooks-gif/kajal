@@ -286,11 +286,13 @@ export default function App() {
       {/* Product Detail Modal with India PIN Code Delivery Verification */}
       <ProductDetailModal
         product={selectedProduct}
+        allProducts={PRODUCTS}
         region={region}
         festivalMode={festivalMode}
         onClose={() => setSelectedProduct(null)}
         onAddToCart={handleAddToCart}
         onLogPinCheck={handleLogPinCheck}
+        onSelectAnotherProduct={handleSelectProduct}
       />
 
       {/* Sliding Cart Drawer */}

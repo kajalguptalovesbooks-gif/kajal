@@ -19,6 +19,7 @@ export const PRODUCTS: Product[] = [
     isFestivePick: true,
     festiveTag: 'Festive Pick',
     festiveHighlight: 'Comfortable 100% organic cotton for family gatherings and festive pooja days.',
+    occasions: ['Family', 'Yourself'],
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
     colors: [
       { name: 'Warm Marigold', hex: '#E37400' },
@@ -46,6 +47,7 @@ export const PRODUCTS: Product[] = [
     isFestivePick: true,
     festiveTag: 'Special Edition',
     festiveHighlight: 'An eco-friendly celebration gift that replaces single-use plastics.',
+    occasions: ['Friends', 'Work', 'Yourself'],
     colors: [
       { name: 'Brushed Golden Brass', hex: '#D4AF37' },
       { name: 'Matte Onyx', hex: '#202124' },
@@ -72,6 +74,7 @@ export const PRODUCTS: Product[] = [
     isFestivePick: true,
     festiveTag: 'Limited Edition',
     festiveHighlight: 'Delightful collector piece to brighten up your desk for the festive season.',
+    occasions: ['Friends', 'Work', 'Yourself'],
     colors: [
       { name: 'Festive Gold Edition', hex: '#FBBC04' },
       { name: 'Classic Android Green', hex: '#34A853' },
@@ -98,6 +101,7 @@ export const PRODUCTS: Product[] = [
     isFestivePick: true,
     festiveTag: 'Festive Gift Idea',
     festiveHighlight: 'A durable, premium gift for college students and working professionals.',
+    occasions: ['Work', 'Yourself', 'Family'],
     colors: [
       { name: 'Anthracite Grey', hex: '#2C3038' },
       { name: 'Subtle Earth Tan', hex: '#A89F91' },
@@ -117,6 +121,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 164,
     description: 'Stoneware matte exterior with a smooth gloss interior. Designed with an ergonomic broad handle and subtle debossed Google 4-color underline.',
     isFestivePick: false,
+    occasions: ['Family', 'Work', 'Friends'],
     colors: [
       { name: 'Warm Cream', hex: '#F1EFEA' },
       { name: 'Charcoal Black', hex: '#202124' },
@@ -137,6 +142,7 @@ export const PRODUCTS: Product[] = [
     isFestivePick: true,
     festiveTag: 'Popular Pick',
     festiveHighlight: 'Great for traveling home to visit family during festive holidays.',
+    occasions: ['Work', 'Friends', 'Yourself'],
     colors: [
       { name: 'Storm Grey', hex: '#5F6368' },
       { name: 'Hazel Sage', hex: '#879589' },
@@ -155,6 +161,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 88,
     description: '400 GSM heavyweight organic French terry cotton with custom nickel hardware, ribbed side panels, and embroidered tonal Google wordmark.',
     isFestivePick: false,
+    occasions: ['Yourself', 'Family'],
     sizes: ['S', 'M', 'L', 'XL'],
     colors: [
       { name: 'Heather Grey', hex: '#D2D3D5' },
@@ -176,6 +183,7 @@ export const PRODUCTS: Product[] = [
     isFestivePick: true,
     festiveTag: 'Eco Festive',
     festiveHighlight: 'Sustainable and roomy for shopping traditional sweets and festive essentials.',
+    occasions: ['Family', 'Friends', 'Yourself'],
     colors: [
       { name: 'Natural Cotton', hex: '#F5F5DC' },
       { name: 'Forest Green', hex: '#1E4D2B' },
@@ -194,6 +202,7 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 63,
     description: 'Sustainable bamboo wood cover notebook with 160 lined pages of 100gsm recycled acid-free paper, paired with a matching weighted aluminum/bamboo pen.',
     isFestivePick: false,
+    occasions: ['Work', 'Friends'],
     inStock: true,
     material: 'FSC-Certified Bamboo & Recycled Paper',
   },
@@ -208,12 +217,50 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 129,
     description: 'Splash-proof slide-lid tumbler fitting standard vehicle cup holders. Keeps your morning chai or iced brew at optimal temperature.',
     isFestivePick: false,
+    occasions: ['Work', 'Family', 'Yourself'],
     colors: [
       { name: 'Glacier White', hex: '#FFFFFF' },
       { name: 'Google Blue', hex: '#1A73E8' },
     ],
     inStock: true,
     material: 'Double Wall Vacuum Stainless Steel',
+  },
+  {
+    id: 'gms-11',
+    name: 'Google Lightweight Windbreaker Packable Jacket',
+    category: 'Apparel',
+    priceINR: 2899,
+    priceUSD: 38.0,
+    image: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=800&q=80',
+    rating: 4.8,
+    reviewsCount: 71,
+    description: 'Featherlight water-repellent jacket that packs into its own pocket. Features elastic storm cuffs and reflective Google logo detailing.',
+    isFestivePick: false,
+    occasions: ['Yourself', 'Friends'],
+    sizes: ['M', 'L', 'XL'],
+    colors: [
+      { name: 'Matte Slate', hex: '#3C4043' },
+      { name: 'Electric Teal', hex: '#00796B' },
+    ],
+    inStock: true,
+    material: '100% Recycled Ripstop Nylon',
+  },
+  {
+    id: 'gms-12',
+    name: 'Google Campus Natural Ceramic Coaster Set (4-Pack)',
+    category: 'Accessories',
+    priceINR: 799,
+    priceUSD: 10.0,
+    image: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80',
+    rating: 4.9,
+    reviewsCount: 140,
+    description: 'Set of 4 absorbent ceramic stone coasters with non-scratch cork backing. Embossed with subtle Google 4-color dots.',
+    isFestivePick: true,
+    festiveTag: 'Host Gift',
+    festiveHighlight: 'Perfect festive dinner host gift for family celebrations.',
+    occasions: ['Family', 'Friends', 'Work'],
+    inStock: true,
+    material: 'Absorbent Ceramic Stone & Cork',
   },
 ];
 

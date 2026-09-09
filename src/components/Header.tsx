@@ -21,128 +21,124 @@ export const Header: React.FC<HeaderProps> = ({
   region,
   onRegionChange,
   festivalMode,
-  onToggleFestivalMode,
+  onToggleFestivalMode: _onToggleFestivalMode,
   selectedCategory,
   onSelectCategory,
   searchQuery,
   onSearchChange,
   cartCount,
   onOpenCart,
-  onOpenExperiment,
+  onOpenExperiment: _onOpenExperiment,
 }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [showRegionDropdown, setShowRegionDropdown] = useState(false);
 
   const categories: Category[] = ['All', 'Apparel', 'Drinkware', 'Bags & Lifestyle', 'Accessories'];
 
+  const handleCategoryClick = (cat: Category) => {
+    onSelectCategory(cat);
+    // Smoothly scroll down to catalog so user instantly sees filtered results
+    setTimeout(() => {
+      const el = document.getElementById('catalog');
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }, 50);
+  };
+
+  const handleFestivePicksClick = () => {
+    const el = document.getElementById('festive-picks');
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-[#E8EAED] shadow-xs">
-      {/* Top Prototype & Localized Announcement Banner */}
-      <div className={`text-xs py-2 px-4 transition-colors duration-300 ${
-        festivalMode && region === 'IN'
-          ? 'bg-gradient-to-r from-[#FFF8E1] via-[#FFFDE7] to-[#FFF3E0] text-[#795548] border-b border-[#FFE082]'
-          : 'bg-[#F1F3F4] text-[#5F6368] border-b border-[#E8EAED]'
-      }`}>
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center space-x-2">
+      {/* Top Customer Announcement & Currency/Country Bar */}
+      <div
+        className={`text-xs py-2 px-4 transition-colors duration-300 ${
+          festivalMode && region === 'IN'
+            ? 'bg-gradient-to-r from-[#FFF8E1] via-[#FFFDE7] to-[#FFF3E0] text-[#795548] border-b border-[#FFE082]'
+            : 'bg-[#F8F9FA] text-[#5F6368] border-b border-[#E8EAED]'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          {/* Announcement Message */}
+          <div className="flex items-center space-x-2 truncate">
             {festivalMode && region === 'IN' ? (
               <>
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#FBBC04]/25 text-[#D97706]">
+                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#FBBC04]/25 text-[#D97706] shrink-0">
                   <DiyaIcon className="w-3.5 h-3.5" />
                 </span>
-                <span className="font-medium text-[#B45309]">
-                  Ganesh Chaturthi Special:
+                <span className="font-semibold text-[#B45309]">
+                  Ganesh Chaturthi Festive Edition:
                 </span>
-                <span className="hidden sm:inline">
-                  Limited-time festive picks & fast India PIN code delivery. Free shipping on orders over ₹1,999.
+                <span className="hidden sm:inline truncate text-[#5F6368]">
+                  Pan-India express delivery • Free shipping on orders over ₹1,999 • 100% Genuine Google Gear
                 </span>
-                <span className="sm:hidden text-xs">
-                  Festive picks & ₹0 delivery above ₹1,999
+                <span className="sm:hidden text-xs truncate text-[#5F6368]">
+                  Free delivery on orders over ₹1,999
                 </span>
               </>
             ) : (
-              <span>
-                Google Merchandise Store — Official branded merchandise, sustainable apparel & tech gear.
+              <span className="truncate">
+                Official Google Merchandise Store • Free Pan-India delivery on orders over ₹1,999 • Dispatched from Mumbai
               </span>
             )}
           </div>
 
-          {/* Prototype Controls Bar inside header bar */}
-          <div className="flex items-center space-x-3 ml-auto text-[11px]">
-            {/* Region Selector */}
-            <div className="relative">
-              <button
-                id="region-selector-btn"
-                onClick={() => setShowRegionDropdown(!showRegionDropdown)}
-                className="inline-flex items-center space-x-1 font-medium text-[#3C4043] bg-white/80 hover:bg-white px-2 py-0.5 rounded border border-[#DADCE0] transition-all cursor-pointer"
-                title="Toggle Regional Experience"
-              >
-                <Globe className="w-3 h-3 text-[#1A73E8]" />
-                <span>Region: {region === 'IN' ? 'India 🇮🇳 (INR ₹)' : 'Global 🇺🇸 (USD $)'}</span>
-              </button>
+          {/* Customer Locale Switcher (India / Global) */}
+          <div className="relative shrink-0 text-[11px]">
+            <button
+              id="region-selector-btn"
+              onClick={() => setShowRegionDropdown(!showRegionDropdown)}
+              className="inline-flex items-center space-x-1.5 font-medium text-[#3C4043] hover:text-[#202124] bg-white/90 hover:bg-white px-2.5 py-1 rounded-full border border-[#DADCE0] transition-all cursor-pointer shadow-2xs"
+              title="Change Delivery Country / Currency"
+            >
+              <Globe className="w-3.5 h-3.5 text-[#1A73E8]" />
+              <span>{region === 'IN' ? '🇮🇳 India (INR ₹)' : '🇺🇸 Global (USD $)'}</span>
+            </button>
 
-              {showRegionDropdown && (
-                <div className="absolute right-0 mt-1 w-52 bg-white rounded-lg shadow-lg border border-[#DADCE0] py-1.5 z-50 animate-in fade-in zoom-in-95">
-                  <div className="px-3 py-1 text-[10px] uppercase tracking-wider text-[#70757A] font-semibold">
-                    Select Experience Mode
-                  </div>
-                  <button
-                    onClick={() => {
-                      onRegionChange('IN');
-                      setShowRegionDropdown(false);
-                    }}
-                    className={`w-full text-left px-3 py-2 flex items-center justify-between text-xs hover:bg-[#F8F9FA] ${
-                      region === 'IN' ? 'bg-[#E8F0FE] text-[#1A73E8] font-medium' : 'text-[#3C4043]'
-                    }`}
-                  >
-                    <span className="flex items-center gap-1.5">
-                      <span>🇮🇳</span> India (INR ₹, PIN Check)
-                    </span>
-                    {region === 'IN' && <span className="text-[10px] font-bold text-[#1A73E8]">ACTIVE</span>}
-                  </button>
-                  <button
-                    onClick={() => {
-                      onRegionChange('US');
-                      setShowRegionDropdown(false);
-                    }}
-                    className={`w-full text-left px-3 py-2 flex items-center justify-between text-xs hover:bg-[#F8F9FA] ${
-                      region === 'US' ? 'bg-[#E8F0FE] text-[#1A73E8] font-medium' : 'text-[#3C4043]'
-                    }`}
-                  >
-                    <span className="flex items-center gap-1.5">
-                      <span>🇺🇸</span> Global / US (USD $)
-                    </span>
-                    {region === 'US' && <span className="text-[10px] font-bold text-[#1A73E8]">ACTIVE</span>}
-                  </button>
+            {showRegionDropdown && (
+              <div className="absolute right-0 mt-1.5 w-56 bg-white rounded-xl shadow-xl border border-[#DADCE0] py-2 z-50 animate-in fade-in zoom-in-95">
+                <div className="px-3 py-1 text-[10px] uppercase tracking-wider text-[#70757A] font-bold">
+                  Delivery Destination
                 </div>
-              )}
-            </div>
-
-            {/* Festival Mode Switch (PRD Section 19) */}
-            <button
-              id="festival-mode-toggle"
-              onClick={onToggleFestivalMode}
-              className={`inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full border transition-all cursor-pointer ${
-                festivalMode
-                  ? 'bg-[#FEF3C7] border-[#F59E0B] text-[#92400E] font-semibold'
-                  : 'bg-white border-[#DADCE0] text-[#5F6368] hover:bg-[#F1F3F4]'
-              }`}
-              title="Toggle temporary Ganesh Chaturthi festive layer (PRD Section 19)"
-            >
-              <Sparkles className={`w-3 h-3 ${festivalMode ? 'text-[#D97706]' : 'text-[#9AA0A6]'}`} />
-              <span>Festive Mode: {festivalMode ? 'ON' : 'OFF'}</span>
-            </button>
-
-            {/* Experiment Analytics Dashboard Trigger */}
-            <button
-              id="experiment-analytics-btn"
-              onClick={onOpenExperiment}
-              className="inline-flex items-center space-x-1 px-2 py-0.5 bg-[#E8F0FE] hover:bg-[#D2E3FC] text-[#1A73E8] border border-[#AECBFA] rounded font-medium transition-colors cursor-pointer"
-              title="View GA4 Test Hypothesis & Live Events"
-            >
-              <BarChart3 className="w-3 h-3" />
-              <span className="hidden md:inline">GA4 Experiment</span>
-            </button>
+                <button
+                  onClick={() => {
+                    onRegionChange('IN');
+                    setShowRegionDropdown(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 flex items-center justify-between text-xs hover:bg-[#F8F9FA] transition-colors cursor-pointer ${
+                    region === 'IN' ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043]'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="text-base">🇮🇳</span>
+                    <span>India (INR ₹)</span>
+                  </span>
+                  {region === 'IN' && <span className="text-[10px] font-bold text-[#1A73E8]">CURRENT</span>}
+                </button>
+                <button
+                  onClick={() => {
+                    onRegionChange('US');
+                    setShowRegionDropdown(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 flex items-center justify-between text-xs hover:bg-[#F8F9FA] transition-colors cursor-pointer ${
+                    region === 'US' ? 'bg-[#E8F0FE] text-[#1A73E8] font-semibold' : 'text-[#3C4043]'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="text-base">🇺🇸</span>
+                    <span>United States (USD $)</span>
+                  </span>
+                  {region === 'US' && <span className="text-[10px] font-bold text-[#1A73E8]">CURRENT</span>}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -153,8 +149,9 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <button
-              onClick={() => onSelectCategory('All')}
+              onClick={() => handleCategoryClick('All')}
               className="flex items-center space-x-2.5 text-left group cursor-pointer focus:outline-hidden"
+              title="Google Merchandise Store Home"
             >
               {/* Google G Logo */}
               <div className="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-xs border border-[#E8EAED] group-hover:shadow-sm transition-shadow">
@@ -182,8 +179,8 @@ export const Header: React.FC<HeaderProps> = ({
                   <span>Google</span>
                   <span className="text-[#5F6368] font-normal text-sm">Merchandise Store</span>
                   {region === 'IN' && (
-                    <span className="text-[11px] font-semibold bg-[#E8F0FE] text-[#1A73E8] px-1.5 py-0.2 rounded border border-[#D2E3FC]">
-                      India 🇮🇳
+                    <span className="text-[10px] font-bold bg-[#E8F0FE] text-[#1A73E8] px-1.5 py-0.5 rounded border border-[#D2E3FC]">
+                      India Store
                     </span>
                   )}
                 </div>
@@ -192,12 +189,12 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Desktop Category Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
+          <nav className="hidden lg:flex items-center space-x-1.5">
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => onSelectCategory(cat)}
-                className={`px-3 py-1.5 text-sm font-medium rounded-full transition-colors cursor-pointer ${
+                onClick={() => handleCategoryClick(cat)}
+                className={`px-3.5 py-2 text-sm font-medium rounded-full transition-all cursor-pointer ${
                   selectedCategory === cat
                     ? 'bg-[#202124] text-white shadow-xs'
                     : 'text-[#5F6368] hover:text-[#202124] hover:bg-[#F1F3F4]'
@@ -209,39 +206,48 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Special Ganesh Chaturthi Nav link when active */}
             {festivalMode && region === 'IN' && (
-              <a
-                href="#festive-picks"
-                className="inline-flex items-center space-x-1 px-3 py-1.5 text-sm font-medium text-[#B45309] bg-[#FEF3C7] hover:bg-[#FDE68A] rounded-full border border-[#F59E0B]/30 transition-colors"
+              <button
+                onClick={handleFestivePicksClick}
+                className="inline-flex items-center space-x-1.5 px-3.5 py-2 text-sm font-semibold text-[#B45309] bg-[#FEF3C7] hover:bg-[#FDE68A] rounded-full border border-[#F59E0B]/40 transition-colors cursor-pointer"
               >
-                <DiyaIcon className="w-3.5 h-3.5 text-[#D97706]" />
-                <span>Ganesh Chaturthi Picks</span>
-              </a>
+                <DiyaIcon className="w-4 h-4 text-[#D97706]" />
+                <span>Festive Picks</span>
+              </button>
             )}
           </nav>
 
-          {/* Right Action Controls (Search, Account, Cart) */}
+          {/* Right Action Controls (Search & Cart) */}
           <div className="flex items-center space-x-2 sm:space-x-3">
             {/* Search Toggle / Bar */}
             <div className="relative">
               {showSearch ? (
-                <div className="flex items-center bg-[#F1F3F4] rounded-full px-3 py-1.5 w-48 sm:w-64 border border-transparent focus-within:border-[#1A73E8] focus-within:bg-white focus-within:shadow-sm transition-all">
+                <div className="flex items-center bg-[#F1F3F4] rounded-full px-3 py-1.5 w-48 sm:w-64 border border-transparent focus-within:border-[#1A73E8] focus-within:bg-white focus-within:shadow-xs transition-all">
                   <Search className="w-4 h-4 text-[#5F6368] shrink-0 mr-2" />
                   <input
                     type="text"
                     placeholder="Search Google gear..."
                     value={searchQuery}
-                    onChange={(e) => onSearchChange(e.target.value)}
+                    onChange={(e) => {
+                      onSearchChange(e.target.value);
+                      if (e.target.value) {
+                        const el = document.getElementById('catalog');
+                        if (el) {
+                          const top = el.getBoundingClientRect().top + window.scrollY - 80;
+                          window.scrollTo({ top, behavior: 'smooth' });
+                        }
+                      }
+                    }}
                     autoFocus
                     className="w-full text-xs sm:text-sm bg-transparent border-none outline-hidden text-[#202124] placeholder-[#80868B]"
                   />
                   {searchQuery && (
-                    <button onClick={() => onSearchChange('')} className="p-0.5 hover:text-[#202124] text-[#80868B]">
+                    <button onClick={() => onSearchChange('')} className="p-0.5 hover:text-[#202124] text-[#80868B] cursor-pointer">
                       <X className="w-3.5 h-3.5" />
                     </button>
                   )}
                   <button
                     onClick={() => setShowSearch(false)}
-                    className="ml-1 text-xs text-[#5F6368] hover:text-[#202124]"
+                    className="ml-1 text-xs text-[#5F6368] hover:text-[#202124] cursor-pointer"
                   >
                     Done
                   </button>
@@ -267,7 +273,7 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <ShoppingBag className="w-5 h-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-5 h-5 flex items-center justify-center text-[11px] font-bold text-white bg-[#1A73E8] rounded-full border-2 border-white animate-in zoom-in">
+                <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 px-1 flex items-center justify-center text-[11px] font-bold text-white bg-[#1A73E8] rounded-full border-2 border-white animate-in zoom-in shadow-xs">
                   {cartCount}
                 </span>
               )}
@@ -275,13 +281,13 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Mobile Category Row */}
-        <div className="lg:hidden flex items-center space-x-1 py-2 overflow-x-auto no-scrollbar border-t border-[#F1F3F4]">
+        {/* Mobile Category Row with min 44px touch targets */}
+        <div className="lg:hidden flex items-center space-x-1.5 py-2.5 overflow-x-auto no-scrollbar border-t border-[#F1F3F4]">
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => onSelectCategory(cat)}
-              className={`px-3 py-1 text-xs font-medium rounded-full shrink-0 transition-colors ${
+              onClick={() => handleCategoryClick(cat)}
+              className={`min-h-[38px] px-3.5 py-1.5 text-xs font-medium rounded-full shrink-0 transition-colors cursor-pointer flex items-center ${
                 selectedCategory === cat
                   ? 'bg-[#202124] text-white'
                   : 'text-[#5F6368] bg-[#F1F3F4] hover:bg-[#E8EAED]'
@@ -291,13 +297,13 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           ))}
           {festivalMode && region === 'IN' && (
-            <a
-              href="#festive-picks"
-              className="px-3 py-1 text-xs font-medium text-[#B45309] bg-[#FEF3C7] rounded-full shrink-0 border border-[#F59E0B]/30 flex items-center gap-1"
+            <button
+              onClick={handleFestivePicksClick}
+              className="min-h-[38px] px-3.5 py-1.5 text-xs font-semibold text-[#B45309] bg-[#FEF3C7] rounded-full shrink-0 border border-[#F59E0B]/40 flex items-center gap-1.5 cursor-pointer"
             >
-              <DiyaIcon className="w-3 h-3 text-[#D97706]" />
+              <DiyaIcon className="w-3.5 h-3.5 text-[#D97706]" />
               <span>Festive Picks</span>
-            </a>
+            </button>
           )}
         </div>
       </div>

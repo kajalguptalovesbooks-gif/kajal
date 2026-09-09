@@ -2,6 +2,10 @@ export type Region = 'IN' | 'US';
 
 export type Category = 'All' | 'Apparel' | 'Drinkware' | 'Bags & Lifestyle' | 'Accessories';
 
+export type Occasion = 'All' | 'Family' | 'Friends' | 'Work' | 'Yourself';
+
+export type PriceFilter = 'all' | 'under-1500' | 'under-2500' | 'above-2500';
+
 export interface Product {
   id: string;
   name: string;
@@ -17,6 +21,7 @@ export interface Product {
   isFestivePick?: boolean;
   festiveTag?: string;
   festiveHighlight?: string;
+  occasions?: ('Family' | 'Friends' | 'Work' | 'Yourself')[];
   sizes?: string[];
   colors?: { name: string; hex: string }[];
   inStock: boolean;
